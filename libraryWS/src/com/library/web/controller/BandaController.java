@@ -13,9 +13,7 @@ import com.library.entity.Banda;
 
 @Path("/bandas")
 public class BandaController {
-
-	// vamos utilizar um Map estático para
-	// "simular" uma base de dados
+	
 	static private Map<Integer, Banda> bandasMap;
 
 	
