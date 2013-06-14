@@ -1,0 +1,14 @@
+O sistema de back-end da biblioteca utiliza MySQL como base de dados;
+
+requisitos:
+
+* mysql rodando na maquina onde o sistema irá rodar.
+* criar banco de dados chamado "library"
+* saber: 
+	* url de conexão
+	* usuario e senha de conexão
+
+* alterar arquivo jdbc.properties 
+	* jdbc.url = recebe url de conexão ao banco
+	* jdbc.username = recebe user de conexão ao banco
+	* jdbc.password = recebe passowrod de conexão ao banco

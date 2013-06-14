@@ -18,12 +18,16 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 		
 	<context:component-scan base-package="com.library" />
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"><value>/WEB-INF/jdbc.properties</value></property>
+	</bean>
 		
 	<bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >	
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:9119/dombosco"/>  
-	    <property name="user" value="root"/>  
-        <property name="password" value="@Master79"/>	
+		<property name="jdbcUrl"><value>${jdbc.url}</value></property>  
+	    <property name="user"><value>${jdbc.username}</value></property>  
+        <property name="password"><value>${jdbc.password}</value></property> 
         <property name="maxPoolSize" value="10" />
 		<property name="maxStatements" value="0" />
 		<property name="minPoolSize" value="5" />  
@@ -32,9 +36,9 @@
 	
   	<bean id="JDBCDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
    		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-   		<property name="url" value="jdbc:mysql://localhost:9119/dombosco"/>  
-   		<property name="username" value="root"/>
-   		<property name="password" value="@Master79"/>
+   		<property name="url"><value>${jdbc.url}</value></property>  
+	    <property name="username"><value>${jdbc.username}</value></property>  
+        <property name="password"><value>${jdbc.password}</value></property> 
     </bean>
 	
 	<bean id="entityManagerFactory"
