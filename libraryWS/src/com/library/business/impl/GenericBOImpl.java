@@ -13,9 +13,9 @@ import com.library.persistence.impl.GenericDAOImpl;
 @Service("genericBO")
 public class GenericBOImpl<T> implements GenericBO<T>{
 
-	@Resource(name="genericDAO")
+	@Resource(name = "genericDAO")
 	private GenericDAOImpl<T> genericDAO;
-	
+
 	@SuppressWarnings("hiding")
 	public <T> T findById(Class<T> type, Long id) throws Exception {
 		return genericDAO.findById(type, id);
@@ -23,14 +23,14 @@ public class GenericBOImpl<T> implements GenericBO<T>{
 
 	@SuppressWarnings("hiding")
 	public <T> T findByParameter(Class<T> type, Map<String, Object> queryParans) throws Exception {
-		return genericDAO.findByParameter(type,queryParans);
+		return genericDAO.findByParameter(type, queryParans);
 	}
 
 	public List<T> listPaginated(final Class<T> type, int startRow, int pageSize, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception {
 		return genericDAO.listPaginated(type, startRow, pageSize, queryParans, orderBy, orderByField);
 	}
 
-	public List<T> list(final Class<T> type,  Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception {
+	public List<T> list(final Class<T> type, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception {
 		return genericDAO.list(type, queryParans, orderBy, orderByField);
 	}
 

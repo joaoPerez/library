@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -19,45 +18,49 @@ import com.library.persistence.GenericDAO;
 @Repository("genericDAO")
 public class GenericDAOImpl<T> implements GenericDAO<T> {
 
-	@PersistenceContext(unitName = "library_PU")
-	protected EntityManager em;
+	protected EntityManager em = null;
+
+	@PersistenceContext
+	public void setEntityManager(EntityManager entityManager) {
+		this.em = entityManager;
+	}
 
 	@SuppressWarnings("hiding")
 	public <T> T findById(final Class<T> type, final Long id) throws Exception {
 		T obj = null;
 		try {
 			obj = (T) em.find(type, id);
-		}catch(NoResultException nre){
+		} catch (NoResultException nre) {
 			obj = null;
-		}catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			throw new Exception(e.getMessage(), e);
 		}
 		return obj;
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "hiding" })
 	public <T> T findByParameter(Class<T> type, Map<String, Object> queryParans) throws Exception {
 		T obj = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			
+
 			sql.append(" select x from ");
 			sql.append(type.getSimpleName());
 			sql.append(" x ");
-			
+
 			int x = 0;
-            Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
-            while (iterator.hasNext()) {
-                   Map.Entry<String, Object> element = iterator.next();
-                   String whereAnd = x == 0 ? " where " : " and ";
-                   sql.append(whereAnd).append(element.getKey()).append(element.getValue());
-                   x++;
-            }
-			System.out.println("findByParameter: "+sql.toString());
+			Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, Object> element = iterator.next();
+				String whereAnd = x == 0 ? " where " : " and ";
+				sql.append(whereAnd).append(element.getKey()).append(element.getValue());
+				x++;
+			}
+			System.out.println("findByParameter: " + sql.toString());
 			Query query = em.createQuery(sql.toString());
 			query.setHint("toplink.refresh", "true");
 			obj = (T) query.getSingleResult();
-		} catch(NoResultException nre){
+		} catch (NoResultException nre) {
 			obj = null;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage(), e);
@@ -87,17 +90,15 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 			throw new Exception(e.getMessage(), e);
 		}
 	}
-	
+
 	public T merge(T obj) {
 		return em.merge(obj);
 	}
-	
+
 	/**
-	 * Lista objetos da classe informada no primeiro parametro, retornando um
-	 * lista paginada, caso queira esta lista ordenada, informe o segundo
-	 * parametro como true e preencha os outros parametros de acordo com a
-	 * ordenação desejada, caso contrario deixe o orderBy como NULL.
-	 * @throws Exception 
+	 * Lista objetos da classe informada no primeiro parametro, retornando um lista paginada, caso queira esta lista ordenada, informe o segundo parametro como true e preencha os outros parametros de acordo com a ordenação desejada, caso contrario deixe o orderBy como NULL.
+	 * 
+	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> listPaginated(final Class<T> type, int startRow, int pageSize, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception {
@@ -106,38 +107,36 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 			sql.append(" select x from ");
 			sql.append(type.getSimpleName());
 			sql.append(" x ");
-			
-			int x = 0;
-            Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
-            while (iterator.hasNext()) {
-                   Map.Entry<String, Object> element = iterator.next();
-                   String whereAnd = x == 0 ? " where " : " and ";
-                   sql.append(whereAnd).append(element.getKey()).append(element.getValue());
-                   x++;
-            }
 
-			
+			int x = 0;
+			Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, Object> element = iterator.next();
+				String whereAnd = x == 0 ? " where " : " and ";
+				sql.append(whereAnd).append(element.getKey()).append(element.getValue());
+				x++;
+			}
+
 			if (orderBy != null && orderBy) {
 				sql.append(" order by ").append(orderByField);
 			}
-			
+
 			Query query = em.createQuery(sql.toString());
 			query.setFirstResult(startRow);
 			query.setMaxResults(pageSize);
-			
+
 			query.setHint("toplink.refresh", "true");
 			return query.getResultList();
 		} catch (Exception e) {
 			throw new Exception(e.getMessage(), e);
 		}
 	}
+
 	/**
-	 * Lista objetos da classe informada no primeiro parametro, retornando um
-	 * lista n�o paginada, caso queira esta lista ordenada, informe o segundo
-	 * parametro como true e preencha os outros parametros de acordo com a
-	 * ordena��o desejada, caso contrario deixe o 2� e outros parametros como
+	 * Lista objetos da classe informada no primeiro parametro, retornando um lista n�o paginada, caso queira esta lista ordenada, informe o segundo parametro como true e preencha os outros parametros de acordo com a ordena��o desejada, caso contrario deixe o 2� e outros parametros como
 	 * null.
-	 * @throws Exception 
+	 * 
+	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> list(final Class<T> type, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception {
@@ -146,24 +145,26 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 			sql.append(" select x from ");
 			sql.append(type.getSimpleName());
 			sql.append(" x ");
-			
-			int x = 0;
-            Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
-            while (iterator.hasNext()) {
-                   Map.Entry<String, Object> element = iterator.next();
-                   String whereAnd = x == 0 ? " where " : " and ";
-                   sql.append(whereAnd).append(" x."+element.getKey()).append(element.getValue());
-                   x++;
-            }
-            
-            if (orderBy != null && orderBy) {
-				sql.append(" order by ").append("x."+orderByField);
+
+			if (queryParans != null) {
+				int x = 0;
+				Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
+				while (iterator.hasNext()) {
+					Map.Entry<String, Object> element = iterator.next();
+					String whereAnd = x == 0 ? " where " : " and ";
+					sql.append(whereAnd).append(" x." + element.getKey()).append(element.getValue());
+					x++;
+				}
 			}
-			
-            Query query = em.createQuery(sql.toString());
-			
+
+			if (orderBy != null && orderBy) {
+				sql.append(" order by ").append("x." + orderByField);
+			}
+
+			Query query = em.createQuery(sql.toString());
+
 			query.setHint("toplink.refresh", "true");
-			
+
 			return query.getResultList();
 		} catch (Exception e) {
 			throw new Exception(e.getMessage(), e);
@@ -173,20 +174,20 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 	public Integer count(final Class<T> type, Map<String, Object> queryParans) throws Exception {
 		Long ret = null;
 		try {
-			
+
 			StringBuilder sql = new StringBuilder();
 			sql.append(" select count(x) from ");
 			sql.append(type.getSimpleName());
 			sql.append(" x ");
 
 			int x = 0;
-            Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
-            while (iterator.hasNext()) {
-                   Map.Entry<String, Object> element = iterator.next();
-                   String whereAnd = x == 0 ? " where " : " and ";
-                   sql.append(whereAnd).append(element.getKey()).append(element.getValue());
-                   x++;
-            }
+			Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, Object> element = iterator.next();
+				String whereAnd = x == 0 ? " where " : " and ";
+				sql.append(whereAnd).append(element.getKey()).append(element.getValue());
+				x++;
+			}
 			Query query = em.createQuery(sql.toString());
 			ret = (Long) query.getSingleResult();
 		} catch (Exception e) {

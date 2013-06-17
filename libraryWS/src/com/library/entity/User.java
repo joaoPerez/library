@@ -16,8 +16,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.ForeignKey;
 
-import com.library.entity.enums.UserType;
-
 @XmlRootElement
 @Entity
 @Table(name = "user")
@@ -35,7 +33,9 @@ public class User {
 	private String email;
 
 	@Column(length = 300, nullable = false)
-	private String Address;
+	private String address;
+	
+	private String birth;
 
 	@Column(nullable = false)
 	private Date dateOfBirth;
@@ -45,7 +45,8 @@ public class User {
 	@ForeignKey(name = "FK_USER_BOOK_ID")
 	private List<Book> bookList;
 	
-	private Enum<UserType> userType;
+	@Column(nullable = false)
+	private Boolean admin;
 
 	public int getId() {
 		return id;
@@ -72,11 +73,11 @@ public class User {
 	}
 
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
 
 	public Date getDateOfBirth() {
@@ -95,12 +96,19 @@ public class User {
 		this.bookList = bookList;
 	}
 
-	public Enum<UserType> getUserType() {
-		return userType;
+	public Boolean getAdmin() {
+		return admin;
 	}
 
-	public void setUserType(Enum<UserType> userType) {
-		this.userType = userType;
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
 	}
 
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
 }

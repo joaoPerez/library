@@ -22,7 +22,9 @@
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location"><value>/WEB-INF/jdbc.properties</value></property>
 	</bean>
-		
+	
+	<bean id="userBO" class="com.library.business.impl.UserBOImpl"/>
+	
 	<bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" >	
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
 		<property name="jdbcUrl"><value>${jdbc.url}</value></property>  

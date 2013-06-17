@@ -24,7 +24,7 @@ public class BookQueue {
 	private int id;
 	
 	@ManyToOne(cascade = { CascadeType.PERSIST }, targetEntity = User.class)
-	@JoinColumn(name = "author_id")
+	@JoinColumn(name = "user_id")
 	@ForeignKey(name = "FK_BOOKQUEUE_AUTHOR_ID")
 	private User user;
 	
@@ -32,6 +32,8 @@ public class BookQueue {
 	@JoinColumn(name = "book_id")
 	@ForeignKey(name = "FK_BOOKQUEUE_BOOK_ID")
 	private Book book;
+	
+	private Boolean renting;
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -61,5 +63,13 @@ public class BookQueue {
 
 	public void setBook(Book book) {
 		this.book = book;
+	}
+
+	public Boolean getRenting() {
+		return renting;
+	}
+
+	public void setRenting(Boolean renting) {
+		this.renting = renting;
 	}
 }
