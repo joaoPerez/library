@@ -18,12 +18,8 @@ import com.library.persistence.GenericDAO;
 @Repository("genericDAO")
 public class GenericDAOImpl<T> implements GenericDAO<T> {
 
-	protected EntityManager em = null;
-
 	@PersistenceContext
-	public void setEntityManager(EntityManager entityManager) {
-		this.em = entityManager;
-	}
+	protected EntityManager em;
 
 	@SuppressWarnings("hiding")
 	public <T> T findById(final Class<T> type, final Long id) throws Exception {

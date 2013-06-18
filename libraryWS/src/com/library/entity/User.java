@@ -6,12 +6,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.ForeignKey;
@@ -35,12 +37,13 @@ public class User {
 	@Column(length = 300, nullable = false)
 	private String address;
 	
+	@Transient
 	private String birth;
 
 	@Column(nullable = false)
-	private Date dateOfBirth;
+	private Date birthDate;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name = "book_id")
 	@ForeignKey(name = "FK_USER_BOOK_ID")
 	private List<Book> bookList;
@@ -80,12 +83,12 @@ public class User {
 		this.address = address;
 	}
 
-	public Date getDateOfBirth() {
-		return dateOfBirth;
+	public Date getBirthDate() {
+		return birthDate;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public List<Book> getBookList() {

@@ -3,17 +3,14 @@ package com.library.business.impl;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.library.business.GenericBO;
 import com.library.persistence.impl.GenericDAOImpl;
 
-@Service("genericBO")
 public class GenericBOImpl<T> implements GenericBO<T>{
 
-	@Resource(name = "genericDAO")
+	@Autowired
 	private GenericDAOImpl<T> genericDAO;
 
 	@SuppressWarnings("hiding")
