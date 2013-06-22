@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Author {
 	@Column(length = 100, nullable = false)
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.REFRESH, fetch=FetchType.EAGER)
 	@JoinColumn(name = "book_id")
 	@ForeignKey(name = "FK_AUTHOR_BOOK_ID")
 	private List<Book> bookList;

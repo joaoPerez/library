@@ -26,7 +26,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, insertable = true, updatable = false)
-	private int id;
+	private Integer id;
 
 	@Column(length = 100, nullable = false)
 	private String name;
@@ -43,7 +43,7 @@ public class User {
 	@Column(nullable = false)
 	private Date birthDate;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.REFRESH, fetch=FetchType.EAGER)
 	@JoinColumn(name = "book_id")
 	@ForeignKey(name = "FK_USER_BOOK_ID")
 	private List<Book> bookList;
@@ -51,11 +51,11 @@ public class User {
 	@Column(nullable = false)
 	private Boolean admin;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

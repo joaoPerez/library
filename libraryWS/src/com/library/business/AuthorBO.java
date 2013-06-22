@@ -1,16 +1,24 @@
 package com.library.business;
 
 import java.util.List;
-import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import com.library.entity.Author;
+import com.library.entity.xml.MessageReturn;
 
 public interface AuthorBO extends GenericBO<Author> {
 
 	@GET
-	@Produces("text/xml")
-	public List<Author> list(final Class<Author> Author, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception;
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Author> list() throws Exception;
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public MessageReturn save(final Author author) throws Exception;
 }

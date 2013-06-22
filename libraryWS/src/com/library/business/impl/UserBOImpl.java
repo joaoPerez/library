@@ -19,11 +19,13 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 
 	private static final long serialVersionUID = -7181845834876407823L;
 
+	@Override
 	@Transactional
 	public MessageReturn save(User user) {
 		MessageReturn libReturn = new MessageReturn();
 		try {
 			User u = new User();
+			u.setId(user.getId());
 			u.setAddress(user.getAddress());
 			u.setName(user.getName());
 			u.setAdmin(user.getAdmin());
@@ -34,12 +36,15 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 			e.printStackTrace();
 			libReturn.setMessage(e.getMessage());
 		}
-		if (libReturn.getMessage() == null) {
+		if (libReturn.getMessage() == null && user.getId() == null) {
 			libReturn.setMessage("Usuário Cadastrado com sucesso!");
+		} else if (libReturn.getMessage() == null && user.getId() != null){
+			libReturn.setMessage("Usuário alterado com sucesso!");
 		}
 		return libReturn;
 	}
 
+	@Override
 	public List<User> list() throws Exception {
 		return list(User.class, null, null, null);
 	}
