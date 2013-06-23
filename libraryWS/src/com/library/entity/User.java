@@ -1,9 +1,8 @@
 package com.library.entity;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,7 +26,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, insertable = true, updatable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(length = 100, nullable = false)
 	private String name;
@@ -43,19 +43,19 @@ public class User {
 	@Column(nullable = false)
 	private Date birthDate;
 	
-	@OneToMany(cascade = CascadeType.REFRESH, fetch=FetchType.EAGER)
-	@JoinColumn(name = "book_id")
-	@ForeignKey(name = "FK_USER_BOOK_ID")
-	private List<Book> bookList;
+	@ManyToMany(targetEntity = Book.class, fetch=FetchType.EAGER)
+	@JoinTable(name = "user_book",joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+	@ForeignKey(name = "FK_USER_USER_ID", inverseName = "FK_USER_BOOK_ID")
+	private Set<Book> bookList;
 	
 	@Column(nullable = false)
 	private Boolean admin;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -91,11 +91,11 @@ public class User {
 		this.birthDate = birthDate;
 	}
 
-	public List<Book> getBookList() {
+	public Set<Book> getBookList() {
 		return bookList;
 	}
 
-	public void setBookList(List<Book> bookList) {
+	public void setBookList(Set<Book> bookList) {
 		this.bookList = bookList;
 	}
 

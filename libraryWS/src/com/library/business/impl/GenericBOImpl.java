@@ -14,7 +14,7 @@ public class GenericBOImpl<T> implements GenericBO<T>{
 	private GenericDAOImpl<T> genericDAO;
 
 	@SuppressWarnings("hiding")
-	public <T> T findById(Class<T> type, Long id) throws Exception {
+	public <T> T findById(final Class<T> type, Long id) throws Exception {
 		return genericDAO.findById(type, id);
 	}
 

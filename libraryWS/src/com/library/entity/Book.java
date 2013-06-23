@@ -1,5 +1,7 @@
 package com.library.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,49 +18,51 @@ import org.hibernate.annotations.ForeignKey;
 @XmlRootElement
 @Entity
 @Table(name = "book")
-public class Book {
-	
+public class Book implements Serializable{
+
+	private static final long serialVersionUID = 6705295136012658285L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, insertable = true, updatable = false)
-	private Integer id;
-	
+	private Long id;
+
 	@Column(length = 100, nullable = false)
 	private String title;
-	
+
 	private String description;
-	
+
 	@Column(length = 4, nullable = false)
 	private Integer yearOfPublished;
-	
+
 	private Boolean available;
-	
-	@ManyToOne(cascade = { CascadeType.PERSIST }, targetEntity = Author.class)
-	@JoinColumn(name = "author_id")
+
+	@ManyToOne(cascade = { CascadeType.ALL }, targetEntity = Author.class)
+	@JoinColumn(name = "author_id", nullable = false)
 	@ForeignKey(name = "FK_BOOK_AUTHOR_ID")
 	private Author author;
-	
-	@ManyToOne(cascade = { CascadeType.PERSIST }, targetEntity = Category.class)
-	@JoinColumn(name = "category_id")
+
+	@ManyToOne(cascade = { CascadeType.ALL }, targetEntity = Category.class)
+	@JoinColumn(name = "category_id", nullable = false)
 	@ForeignKey(name = "FK_BOOK_CATEGORY_ID")
 	private Category category;
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ID: "+getId());
-		sb.append(" - TITLE: "+getTitle());
-		sb.append(" - CATEGORY: "+getCategory());
-		sb.append(" - YEAR OF PUBLISHED: "+getYearOfPublished());
-		sb.append(" - AVAILABLE: "+getAvailable());
-		sb.append(" - AUTHOR: "+getAuthor());
+		sb.append("ID: " + getId());
+		sb.append(" - TITLE: " + getTitle());
+		sb.append(" - CATEGORY: " + getCategory());
+		sb.append(" - YEAR OF PUBLISHED: " + getYearOfPublished());
+		sb.append(" - AVAILABLE: " + getAvailable());
+		sb.append(" - AUTHOR: " + getAuthor());
 		return sb.toString();
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -106,7 +110,7 @@ public class Book {
 		return category;
 	}
 
-	public void setCategor(Category category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 }

@@ -16,13 +16,18 @@ import com.library.entity.xml.MessageReturn;
 public class BookBOImpl extends GenericBOImpl<Book> implements BookBO{
 
 	@Override
-	public List<Book> list() throws Exception {
-		return list(Book.class, null, null, null);
+	public List<Book> list()  {
+		try {
+			return list(Book.class, null, null, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
 	@Transactional
-	public MessageReturn save(Book book) throws Exception {
+	public MessageReturn save(Book book)  {
 		MessageReturn libReturn = new MessageReturn();
 		try {
 			Book b = new Book();
@@ -32,7 +37,7 @@ public class BookBOImpl extends GenericBOImpl<Book> implements BookBO{
 			b.setDescription(book.getDescription());
 			b.setTitle(book.getTitle());
 			b.setYearOfPublished(book.getYearOfPublished());
-			b.setCategor(book.getCategory());
+			b.setCategory(book.getCategory());
 			saveGeneric(b);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,6 +48,22 @@ public class BookBOImpl extends GenericBOImpl<Book> implements BookBO{
 		} else if (libReturn.getMessage() == null ){
 			libReturn.setMessage("Livro editado com sucesso!");
 		}
+		return libReturn;
+	}
+
+	@Override
+	public MessageReturn delete(Long id) {
+		MessageReturn libReturn = new MessageReturn();
+		try {
+			Book book = findById(Book.class, id);
+			remove(book);
+		} catch (Exception e) {
+			e.printStackTrace();
+			libReturn.setMessage(e.getMessage());
+		}
+		if (libReturn.getMessage() == null) {
+			libReturn.setMessage("Removido com sucesso!");
+		} 
 		return libReturn;
 	}
 

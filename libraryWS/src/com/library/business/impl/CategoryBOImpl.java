@@ -27,7 +27,6 @@ public class CategoryBOImpl extends GenericBOImpl<Category> implements CategoryB
 		try {
 			Category cat = new Category();
 			cat.setId(category.getId());
-			cat.setBookList(category.getBookList());
 			cat.setType(category.getType());
 			saveGeneric(cat);
 		} catch (Exception e) {

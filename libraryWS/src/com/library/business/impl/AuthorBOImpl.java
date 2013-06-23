@@ -28,7 +28,6 @@ public class AuthorBOImpl extends GenericBOImpl<Author> implements AuthorBO{
 			Author auth = new Author();
 			auth.setId(author.getId());
 			auth.setName(author.getName());
-			auth.setBookList(author.getBookList());
 			saveGeneric(auth);
 		} catch (Exception e) {
 			e.printStackTrace();
