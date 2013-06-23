@@ -37,12 +37,12 @@ public class Book implements Serializable{
 
 	private Boolean available;
 
-	@ManyToOne(cascade = { CascadeType.ALL }, targetEntity = Author.class)
+	@ManyToOne(cascade = { CascadeType.REFRESH }, targetEntity = Author.class)
 	@JoinColumn(name = "author_id", nullable = false)
 	@ForeignKey(name = "FK_BOOK_AUTHOR_ID")
 	private Author author;
 
-	@ManyToOne(cascade = { CascadeType.ALL }, targetEntity = Category.class)
+	@ManyToOne(cascade = { CascadeType.REFRESH }, targetEntity = Category.class)
 	@JoinColumn(name = "category_id", nullable = false)
 	@ForeignKey(name = "FK_BOOK_CATEGORY_ID")
 	private Category category;

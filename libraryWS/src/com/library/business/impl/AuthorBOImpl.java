@@ -39,4 +39,31 @@ public class AuthorBOImpl extends GenericBOImpl<Author> implements AuthorBO{
 		return libReturn;
 	}
 
+	@Override
+	@Transactional
+	public MessageReturn delete(Long id) {
+		MessageReturn libReturn = new MessageReturn();
+		try {
+			Author author = findById(Author.class, id);
+			remove(author);
+		} catch (Exception e) {
+			e.printStackTrace();
+			libReturn.setMessage(e.getMessage());
+		}
+		if (libReturn.getMessage() == null) {
+			libReturn.setMessage("Removido com sucesso!");
+		} 
+		return libReturn;
+	}
+
+	@Override
+	public Author getById(Long id) {
+		try {
+			return findById(Author.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

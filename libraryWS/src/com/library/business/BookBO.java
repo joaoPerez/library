@@ -27,5 +27,9 @@ public interface BookBO extends GenericBO<Book> {
 	
 	@DELETE @Path("{id}")
 	public MessageReturn delete (@PathParam("id") Long id);
+	
+	@GET @Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Book getById(@PathParam("id") Long id);
 
 }

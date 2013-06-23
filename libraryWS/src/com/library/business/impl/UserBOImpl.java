@@ -49,4 +49,31 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 		return list(User.class, null, null, null);
 	}
 
+	@Override
+	@Transactional
+	public MessageReturn delete(Long id) {
+		MessageReturn libReturn = new MessageReturn();
+		try {
+			User user = findById(User.class, id);
+			remove(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			libReturn.setMessage(e.getMessage());
+		}
+		if (libReturn.getMessage() == null) {
+			libReturn.setMessage("Removido com sucesso!");
+		} 
+		return libReturn;
+	}
+
+	@Override
+	public User getById(Long id) {
+		try {
+			return findById(User.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

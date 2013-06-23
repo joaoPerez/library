@@ -41,4 +41,31 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 		return libReturn;
 	}
 
+	@Override
+	@Transactional
+	public MessageReturn delete(Long id) {
+		MessageReturn libReturn = new MessageReturn();
+		try {
+			BookQueue bookQueue = findById(BookQueue.class, id);
+			remove(bookQueue);
+		} catch (Exception e) {
+			e.printStackTrace();
+			libReturn.setMessage(e.getMessage());
+		}
+		if (libReturn.getMessage() == null) {
+			libReturn.setMessage("Removido com sucesso!");
+		} 
+		return libReturn;
+	}
+
+	@Override
+	public BookQueue getById(Long id) {
+		try {
+			return findById(BookQueue.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

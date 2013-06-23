@@ -52,6 +52,7 @@ public class BookBOImpl extends GenericBOImpl<Book> implements BookBO{
 	}
 
 	@Override
+	@Transactional
 	public MessageReturn delete(Long id) {
 		MessageReturn libReturn = new MessageReturn();
 		try {
@@ -65,6 +66,16 @@ public class BookBOImpl extends GenericBOImpl<Book> implements BookBO{
 			libReturn.setMessage("Removido com sucesso!");
 		} 
 		return libReturn;
+	}
+
+	@Override
+	public Book getById(Long id) {
+		try {
+			return findById(Book.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

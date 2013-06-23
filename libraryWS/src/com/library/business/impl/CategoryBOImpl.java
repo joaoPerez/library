@@ -41,4 +41,31 @@ public class CategoryBOImpl extends GenericBOImpl<Category> implements CategoryB
 		return libReturn;
 	}
 
+	@Override
+	@Transactional
+	public MessageReturn delete(Long id) {
+		MessageReturn libReturn = new MessageReturn();
+		try {
+			Category category = findById(Category.class, id);
+			remove(category);
+		} catch (Exception e) {
+			e.printStackTrace();
+			libReturn.setMessage(e.getMessage());
+		}
+		if (libReturn.getMessage() == null) {
+			libReturn.setMessage("Removido com sucesso!");
+		} 
+		return libReturn;
+	}
+
+	@Override
+	public Category getById(Long id) {
+		try {
+			return findById(Category.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
