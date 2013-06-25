@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.ws.rs.Path;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.library.business.UserBO;
+import com.library.entity.Login;
 import com.library.entity.User;
 import com.library.entity.xml.MessageReturn;
+import com.library.persistence.UserDAO;
 import com.library.web.utils.Utils;
 
 @Path("/user")
@@ -18,6 +21,9 @@ import com.library.web.utils.Utils;
 public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializable {
 
 	private static final long serialVersionUID = -7181845834876407823L;
+	
+	@Autowired
+	private UserDAO userDAO;
 
 	@Override
 	@Transactional
@@ -75,5 +81,18 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 		}
 		return null;
 	}
+	
+	@Override
+	public MessageReturn login(Login login) {
+		MessageReturn messageReturn = userDAO.getByEmail(login.getEmail());
+		if (!messageReturn.getUser().getPassword().equals(login.getPassword())) {
+			messageReturn.setUser(null);
+			messageReturn.setMessage("Senha informada esta incorreta!");
+		}else{
+			messageReturn.setMessage("Login realizado com sucesso!");
+		}
+		return messageReturn;
+	}
+
 
 }

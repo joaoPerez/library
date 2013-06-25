@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,6 +23,7 @@ import org.hibernate.annotations.ForeignKey;
 @XmlRootElement
 @Entity
 @Table(name = "user")
+@NamedQueries({@NamedQuery(name = "user.findByEmail", query = "SELECT us FROM User us WHERE us.email = :email")})
 public class User {
 
 	@Id
@@ -36,6 +39,9 @@ public class User {
 
 	@Column(length = 300, nullable = false)
 	private String address;
+	
+	@Column(length = 20, nullable = false)
+	private String password;
 	
 	@Transient
 	private String birth;
@@ -113,5 +119,13 @@ public class User {
 
 	public void setBirth(String birth) {
 		this.birth = birth;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
