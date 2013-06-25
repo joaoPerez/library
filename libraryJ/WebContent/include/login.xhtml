@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.prime.com.tr/ui">
+        
+       	<div id="login" >
+       		<h:form prependId="false">
+       			<p:focus context="panel"/>  
+       			<p:panel header="Acesso Restrito a usuários" id="panel">
+       				<h:panelGrid styleClass="boxLogin" columns="4" border="0" columnClasses="colunaLabel100,colunaInput200,colunaLabel100,colunaInput100,colunaLabel150Center">
+						<h:outputText value=""></h:outputText>
+						<h:outputText value="Email:"/>
+						<h:inputText tabindex="1" required="true" styleClass="inputText200" value=""/>
+						<h:outputText value=""></h:outputText>
+						
+						<h:outputText value=""></h:outputText>
+						<h:outputText value="Senha:"/>
+						<h:inputSecret tabindex="2" required="true" styleClass="inputText200" value=""/>
+						<h:outputText value=""></h:outputText>	
+					</h:panelGrid>
+						
+					<h:panelGrid styleClass="boxLogin" columns="3" columnClasses="colunaLabel150Center,colunaLabel150Center,colunaLabel150Center" border="0">
+						<h:outputText value=""></h:outputText>	
+						<p:commandButton id="btLogin" 
+								tabindex="3"
+								styleClass="button" 
+								value="Login" 
+								update="msgLogin" 
+								ajax="false">
+						</p:commandButton>	
+						<h:outputText value=""></h:outputText>	
+						<!-- <p:commandButton id="btNewUser"
+								tabindex="4" 
+								value="#{messages['lb_solicitar_cadastro']}" 
+								action="#{userMBean.newUser}"
+								update="msgLogin" 
+								ajax="false">
+						</p:commandButton>	 -->
+						
+					</h:panelGrid>
+       			</p:panel>
+			</h:form>
+		</div>
+</ui:composition>

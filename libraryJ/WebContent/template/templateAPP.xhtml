@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+
+<f:view locale="pt_BR" id="view">
+	<h:head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/resources/css/default.css" type="text/css" />
+		<link rel="shortcut icon" href="#{facesContext.externalContext.request.contextPath}/resources/images/icon/ico_ecommerce128x128.png" type="image/x-icon" />
+		<script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/resources/js/formaters.js"></script>
+		<script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/resources/js/functions.js"></script>
+		<title>#{messages['lb_title_site']}</title>
+	</h:head>
+
+	<h:body>
+		<div id="container">
+			<div id="logo">
+				<p:graphicImage url="/resources/images/logo/mconnTI_logo.png" />
+			</div>
+			<!--  comentei para parar o warning
+			<ui:include src="../include/menu.xhtml" />
+			 -->
+			<div id="boxUsuarioLogado">
+				<h:panelGrid columns="2" width="300">
+					<h:outputText value="#{messages['lb_usuarioLogado']}" />
+					<h:outputText value="#{userMBean.user.name}" />
+				</h:panelGrid>
+			</div>
+			
+			<div id="main">
+				<ui:insert name="contentAPP"></ui:insert>
+			</div>
+						
+			<div id="footer">
+				#{messages['info_footerSignature']}
+			</div>
+		</div>
+		
+	</h:body>
+</f:view>
+</html>
