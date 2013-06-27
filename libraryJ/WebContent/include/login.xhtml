@@ -2,26 +2,22 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:p="http://primefaces.prime.com.tr/ui">
+       xmlns:p="http://primefaces.org/ui">
         
        	<div id="login" >
        		<h:form prependId="false">
        			<p:focus context="panel"/>  
-       			<p:panel header="Acesso Restrito a usuários" id="panel">
-       				<h:panelGrid styleClass="boxLogin" columns="4" border="0" columnClasses="colunaLabel100,colunaInput200,colunaLabel100,colunaInput100,colunaLabel150Center">
-						<h:outputText value=""></h:outputText>
+       			<p:panel header="Acesso restrito a Usuários" id="panel">
+       				<h:panelGrid styleClass="boxLogin" columns="2" border="0" columnClasses="width80,width200">
 						<h:outputText value="Email:"/>
-						<h:inputText tabindex="1" required="true" styleClass="inputText200" value=""/>
-						<h:outputText value=""></h:outputText>
+						<h:inputText tabindex="1" label="Email" required="true" value="" size="30"/>
 						
-						<h:outputText value=""></h:outputText>
 						<h:outputText value="Senha:"/>
-						<h:inputSecret tabindex="2" required="true" styleClass="inputText200" value=""/>
-						<h:outputText value=""></h:outputText>	
+						<h:inputSecret tabindex="2" label="Senha" required="true"  value="" size="30"/>
 					</h:panelGrid>
 						
-					<h:panelGrid styleClass="boxLogin" columns="3" columnClasses="colunaLabel150Center,colunaLabel150Center,colunaLabel150Center" border="0">
-						<h:outputText value=""></h:outputText>	
+					<h:panelGrid styleClass="boxLogin" columns="4" columnClasses="width80,width80,width80,width80" border="0">
+					<h:outputText />
 						<p:commandButton id="btLogin" 
 								tabindex="3"
 								styleClass="button" 
@@ -29,15 +25,15 @@
 								update="msgLogin" 
 								ajax="false">
 						</p:commandButton>	
-						<h:outputText value=""></h:outputText>	
-						<!-- <p:commandButton id="btNewUser"
+						<p:commandButton id="btNewUser"
 								tabindex="4" 
-								value="#{messages['lb_solicitar_cadastro']}" 
+								value="Novo" 
 								action="#{userMBean.newUser}"
 								update="msgLogin" 
-								ajax="false">
-						</p:commandButton>	 -->
-						
+								styleClass="button" 
+								ajax="false" immediate="true">
+						</p:commandButton>	
+						<h:outputText />
 					</h:panelGrid>
        			</p:panel>
 			</h:form>

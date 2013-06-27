@@ -2,7 +2,6 @@ html,body {
 	margin:0;
 	padding:0;
 	height:100%; /* needed for container min-height */
-	background:gray;
 	
 	font-family:arial,sans-serif;
 	font-size:small;
@@ -30,7 +29,7 @@ p {
 div#container {
 	position:relative; /* needed for footer positioning*/
 	margin:0 auto; /* center, not in IE5 */
-	width:90%;
+	width:100%;
 	background:#f0f0f0;
 	
 	height:auto !important; /* real browsers */
@@ -417,26 +416,6 @@ div#boxUsuarioLogado{
 	margin-right: 20px;
 }
 
-.categoryTable td:nth-child(2) {
-    width: 88%;
-}
-
-.categoryTable td:nth-child(3) {
-    width: 10%;
-}
-
-.categoryTable td:nth-child(1) td:nth-child(4){
-    width: 1%;
-}
-
-.companyTable td:nth-child(1) td:nth-child(3){
-    width: 1%;
-}
-
-.companyTable td:nth-child(2) {
-    width: 98%;
-}
-
 .autoSize{
 	width: auto !important;
 	height: auto;
@@ -446,12 +425,15 @@ div#boxUsuarioLogado{
 	height: 5px !important;
 }
 
-.boxNewCompany{
-	width: 600px;
+
+.width80{
+	width: 80px;	
 }
 
-.boxCompanyUserTable{
-	width: 390px;
-	margin-left: 105px;
-	border:0px dotted #000;
+.width200{
+	width: 200px;	
+}
+
+.width300{
+	width: 300px;	
 }

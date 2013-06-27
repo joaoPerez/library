@@ -20,23 +20,6 @@
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
 	
-	<context-param>
-		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>client</param-value>
-	</context-param>
-
-	<context-param>
-		<description>
-			If true, rendered HTML code will be formatted, so that it is 'human-readable'
-			i.e. additional line separators and whitespace will be written, that do not
-			influence the HTML code.
-			Default is 'true'
-		</description>
-		<param-name>org.apache.myfaces.PRETTY_HTML</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	
 	<listener>
 		<listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
 	</listener>
