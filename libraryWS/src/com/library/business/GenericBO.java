@@ -12,7 +12,7 @@ public interface GenericBO<T> {
 
 	public List<T> listPaginated(final Class<T> type, int startRow, int pageSize, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception;
 
-	public List<T> list(final Class<T> type, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception;
+	public List<T> list(final Class<T> type, Map<String, String> queryParams, String orderByField) throws Exception;
 
 	public Integer count(final Class<T> type, Map<String, Object> queryParans) throws Exception;
 

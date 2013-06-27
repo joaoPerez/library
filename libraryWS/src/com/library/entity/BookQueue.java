@@ -1,5 +1,7 @@
 package com.library.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,11 +35,13 @@ public class BookQueue {
 	@ForeignKey(name = "FK_BOOKQUEUE_BOOK_ID")
 	private Book book;
 	
+	private Date dateIn;
+	
 	private Boolean renting;
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("ID: "+getId()).append(" - USER: "+getUser()).append(" - BOOK: "+getBook());
+		sb.append("ID: "+getId()).append(" - USER: "+getUser()).append(" - BOOK: "+getBook()).append(" - Date IN: "+getDateIn());
 		return sb.toString();
 	}
 
@@ -71,5 +75,13 @@ public class BookQueue {
 
 	public void setRenting(Boolean renting) {
 		this.renting = renting;
+	}
+
+	public Date getDateIn() {
+		return dateIn;
+	}
+
+	public void setDateIn(Date dateIn) {
+		this.dateIn = dateIn;
 	}
 }

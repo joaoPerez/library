@@ -8,7 +8,7 @@ Como funcionará:
 
 * o usuário precisa fazer login no sistema
 * se o login ter sucesso o sistema apresentará a lista dos livros, esta listra mostrará o status de cada livro (alugado ou disponível)
-* o usuário poderá consultar livros por nome do livro (parcial ou completo) e por autor
+* o usuário poderá consultar livros por nome do livro (parcial ou completo), por autor e por categoria do livro
 * se o usuário selecionar um livro disponível, marcamos este livro com alugado e encaminhamos o usuário para retirar o livro no balcão
 * caso o usuário selecione um livro que esteja alugado
 * damos a opção de ele entrar em uma fila de espera, mostrando o número de usuários aguardando na fila do livro em questão

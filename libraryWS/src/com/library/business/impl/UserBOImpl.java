@@ -52,7 +52,7 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 
 	@Override
 	public List<User> list() throws Exception {
-		return list(User.class, null, null, null);
+		return list(User.class, null, null);
 	}
 
 	@Override

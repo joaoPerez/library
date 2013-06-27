@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.library.business.BookBO;
 import com.library.entity.Book;
 import com.library.entity.xml.MessageReturn;
+import com.library.entity.xml.SearchObject;
 
 @Service("bookBO")
 @Path("/book")
@@ -18,7 +19,7 @@ public class BookBOImpl extends GenericBOImpl<Book> implements BookBO{
 	@Override
 	public List<Book> list()  {
 		try {
-			return list(Book.class, null, null, null);
+			return list(Book.class, null, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,6 +73,16 @@ public class BookBOImpl extends GenericBOImpl<Book> implements BookBO{
 	public Book getById(Long id) {
 		try {
 			return findById(Book.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Book> serchedList(SearchObject serachObject) {
+		try {
+			return list(Book.class, serachObject.getQueryParams(), null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

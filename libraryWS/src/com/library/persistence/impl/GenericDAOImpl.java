@@ -129,32 +129,31 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 	}
 
 	/**
-	 * Lista objetos da classe informada no primeiro parametro, retornando um lista nï¿½o paginada, caso queira esta lista ordenada, informe o segundo parametro como true e preencha os outros parametros de acordo com a ordenaï¿½ï¿½o desejada, caso contrario deixe o 2ï¿½ e outros parametros como
-	 * null.
+	 * Lista objetos da classe informada no primeiro parametro, retornando um lista não paginada, caso queira esta lista ordenada, informe o segundo parametro como true e preencha os outros parametros de acordo com a ordenaï¿½ï¿½o desejada, caso contrario deixe o 2ï¿½ e outros parametros como null.
 	 * 
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> list(final Class<T> type, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception {
+	public List<T> list(final Class<T> type, Map<String, String> queryParams, String orderByField) throws Exception {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append(" select x from ");
 			sql.append(type.getSimpleName());
 			sql.append(" x ");
 
-			if (queryParans != null) {
+			if (queryParams != null) {
 				int x = 0;
-				Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
+				Iterator<Entry<String, String>> iterator = queryParams.entrySet().iterator();
 				while (iterator.hasNext()) {
-					Map.Entry<String, Object> element = iterator.next();
+					Map.Entry<String, String> element = iterator.next();
 					String whereAnd = x == 0 ? " where " : " and ";
-					sql.append(whereAnd).append(" x." + element.getKey()).append(element.getValue());
+					sql.append(whereAnd).append(element.getKey()).append(" " +element.getValue());
 					x++;
 				}
 			}
 
-			if (orderBy != null && orderBy) {
-				sql.append(" order by ").append("x." + orderByField);
+			if (orderByField != null && !orderByField.isEmpty()) {
+				sql.append(" order by ").append(orderByField);
 			}
 
 			Query query = em.createQuery(sql.toString());

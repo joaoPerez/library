@@ -17,7 +17,7 @@ public class CategoryBOImpl extends GenericBOImpl<Category> implements CategoryB
 
 	@Override
 	public List<Category> list() throws Exception {
-		return list(Category.class, null, null, null);
+		return list(Category.class, null, null);
 	}
 
 	@Override

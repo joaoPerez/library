@@ -27,8 +27,8 @@ public class GenericBOImpl<T> implements GenericBO<T>{
 		return genericDAO.listPaginated(type, startRow, pageSize, queryParans, orderBy, orderByField);
 	}
 
-	public List<T> list(final Class<T> type, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception {
-		return genericDAO.list(type, queryParans, orderBy, orderByField);
+	public List<T> list(final Class<T> type, Map<String, String> queryParams, String orderByField) throws Exception {
+		return genericDAO.list(type, queryParams, orderByField);
 	}
 
 	public Integer count(Class<T> type, Map<String, Object> queryParans) throws Exception {

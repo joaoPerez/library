@@ -1,5 +1,6 @@
 package com.library.business.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Path;
@@ -17,7 +18,7 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 
 	@Override
 	public List<BookQueue> list() throws Exception {
-		return list(BookQueue.class, null, null, null);
+		return list(BookQueue.class, null, null);
 	}
 
 	@Override
@@ -29,6 +30,7 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 			queue.setId(bookQueue.getId());
 			queue.setBook(bookQueue.getBook());
 			queue.setUser(bookQueue.getUser());
+			queue.setDateIn(new Date());
 			queue.setRenting(bookQueue.getRenting());
 			saveGeneric(queue);
 		} catch (Exception e) {

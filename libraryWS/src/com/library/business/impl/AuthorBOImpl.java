@@ -17,7 +17,7 @@ public class AuthorBOImpl extends GenericBOImpl<Author> implements AuthorBO{
 
 	@Override
 	public List<Author> list() throws Exception {
-		return list(Author.class, null, null, null);
+		return list(Author.class, null, null);
 	}
 
 	@Override
