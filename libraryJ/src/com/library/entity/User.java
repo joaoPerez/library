@@ -19,6 +19,8 @@ public class User {
 	
 	private Date birthDate;
 	
+	private String birth;
+	
 	private Boolean admin;
 
 	public Long getId() {
@@ -75,5 +77,13 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 }

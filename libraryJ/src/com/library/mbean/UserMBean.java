@@ -1,29 +1,25 @@
 package com.library.mbean;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpSession;
 
 import com.library.entity.User;
+import com.library.entity.xml.MessageReturn;
 import com.library.util.FacesUtil;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 
-@ManagedBean(name = "userMBean")
 @SessionScoped
+@ManagedBean(name = "userMBean")
 public class UserMBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,30 +29,27 @@ public class UserMBean implements Serializable {
 
 	HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 
-	@ManagedProperty(value = "#{userBO}")
-
 	private User user;
 
 	private Boolean isAdmin = false;
-	
+
 	public UserMBean() {
 		this.user = new User();
 	}
 
 	public String login() {
 		try {
-			//TODO logica de login com o server via JSON
+			// TODO logica de login com o server via JSON
 		} catch (Exception e) {
 			FacesUtil.exibirMensagemErro(e.getMessage());
-		} 
+		}
 
-		return "../common/index.xhtml?faces-redirect=true";		
+		return "../common/index.xhtml?faces-redirect=true";
 	}
 
 	public void newUser() {
 		this.user = new User();
 	}
-
 
 	public String cancel() {
 		return "index.xhtml\faces-redirect=true";
@@ -64,7 +57,22 @@ public class UserMBean implements Serializable {
 
 	public String save() {
 		try {
-			//TODO logica de cadastro de usuário no server JSON
+			Client client = Client.create();
+
+			WebResource webResource = client.resource("http://www.mconnti.com:8080/libraryWS/user");
+			user.setAdmin(false);
+			ClientResponse response = webResource.type("application/json").post(ClientResponse.class, user);
+
+			if (response.getStatus() != 201) {
+				System.out.println("Failed : HTTP error code : " + response.getStatus());
+			}
+
+			System.out.println("Output from Server .... \n");
+			MessageReturn ret = response.getEntity(MessageReturn.class);
+			System.out.println(ret.getMessage());
+			FacesMessage message = new FacesMessage(ret.getMessage());
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			FacesContext.getCurrentInstance().addMessage("", message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -73,7 +81,7 @@ public class UserMBean implements Serializable {
 
 	public void delete() {
 		try {
-			//TODO logica de deleção de usuário no server JSON
+			// TODO logica de deleção de usuário no server JSON
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,16 +103,12 @@ public class UserMBean implements Serializable {
 	public void existsEmail() throws ValidatorException {
 		String email = this.user.getEmail();
 		this.user.setEmail(email);
-		Boolean exists =  false; //userBO.existsEmail(this.user);
+		Boolean exists = false; // userBO.existsEmail(this.user);
 		if (this.user.getId() == null && exists) {
 			FacesMessage message = new FacesMessage("Este email ja esta cadastrado em nosso serviço!");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
 			FacesContext.getCurrentInstance().addMessage("", message);
 		}
-	}
-
-	public void setUserBO(UserBO userBO) {
-		this.userBO = userBO;
 	}
 
 	public User getUser() {
