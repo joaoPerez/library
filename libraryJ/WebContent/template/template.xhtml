@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<f:view locale="pt_BR" id="view">
+	<h:head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/resources/css/default.css" type="text/css" />
+		<title>Livraria onLine</title>
+	</h:head>
+
+	<h:body>
+		<div id="container">
+			<h:panelGrid styleClass="boxLoginMessage" >
+				<p:messages showDetail="true" showSummary="false" autoUpdate="true" id="msgLogin" />
+			</h:panelGrid>
+			<ui:include src="/include/login.xhtml" />
+			
+			<!-- <ui:include src="../include/login.xhtml" /> 
+			<div id="logo">
+				<p:graphicImage url="/resources/images/logo/mconnTI_logo.png" />
+			</div>
+			<p:panel styleClass="barVertical"/>
+			
+			<div id="register">
+				<h:form>
+					<p:commandLink action="#{userMBean.newUser}" reRender="newUser:newUser">
+						<p:graphicImage value="#{messages['img_register']}" onclick="newUserModal.show();" />
+					</p:commandLink>
+				</h:form>
+			</div> -->
+			<div id="footer">
+				<p>Trabalho final de Programação C, professor Ries. Desenvolvido por Anderson Santos, Vitor Leonardi e João Paulo</p>
+			</div>
+			
+			
+		</div>
+		
+		<!-- <p:dialog header="#{messages['lb_cadastroUsuario']}" resizable="false" widgetVar="newUserModal" modal="true" height="330" width="580">  
+		    <ui:include src="../include/newUser.xhtml" />
+		</p:dialog>  --> 
+	</h:body>
+</f:view>
+</html>

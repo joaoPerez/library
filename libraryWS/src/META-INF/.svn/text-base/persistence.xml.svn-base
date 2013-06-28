@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+
+	<persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
+		<class>com.mconnti.store.entity.Category</class>
+		<class>com.mconnti.store.entity.City</class>
+		<class>com.mconnti.store.entity.Company</class>
+		<class>com.mconnti.store.entity.Country</class>
+		<class>com.mconnti.store.entity.Path</class>
+		<class>com.mconnti.store.entity.Product</class>
+		<class>com.mconnti.store.entity.State</class>
+		<class>com.mconnti.store.entity.Role</class>
+		<class>com.mconnti.store.entity.User</class>		
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />
+
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.connection.pool_size" value="999999999999" />
+		</properties>
+	</persistence-unit>
+</persistence>
+
+
+
