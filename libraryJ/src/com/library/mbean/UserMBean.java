@@ -9,7 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
 
 import com.library.entity.User;
 import com.library.entity.xml.MessageReturn;
@@ -31,20 +33,52 @@ public class UserMBean implements Serializable {
 
 	private User user;
 
+	private User loggedUser;
+
 	private Boolean isAdmin = false;
 
+	Client client = null;
+
+	String host = null;
+
 	public UserMBean() {
+		client = Client.create();
 		this.user = new User();
+		Object request = FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		if (request instanceof HttpServletRequest) {
+			String[] str = ((HttpServletRequest) request).getRequestURL().toString().split("library");
+			host = str[0];
+			System.out.println(host);
+		}
 	}
 
 	public String login() {
+		MessageReturn ret = new MessageReturn();
+
 		try {
-			// TODO logica de login com o server via JSON
+
+			WebResource webResource = client.resource(host + "libraryWS/user");
+
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, user);
+
+			if (response.getStatus() != 201 && response.getStatus() != 200) {
+				throw new Exception("Failed : HTTP error code : " + response.getStatus());
+			}
+
+			ret = response.getEntity(MessageReturn.class);
+
+			if (ret.getUser() == null) {
+				throw new Exception(ret.getMessage());
+			} else {
+				loggedUser = ret.getUser();
+				FacesUtil.showSuccessMessage(ret.getMessage());
+			}
 		} catch (Exception e) {
-			FacesUtil.exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+			FacesUtil.showAErrorMessage(e.getMessage());
 		}
 
-		return "../common/index.xhtml?faces-redirect=true";
+		return "/common/index.xhtml?faces-redirect=true";
 	}
 
 	public void newUser() {
@@ -56,25 +90,29 @@ public class UserMBean implements Serializable {
 	}
 
 	public String save() {
+		MessageReturn ret = new MessageReturn();
 		try {
-			Client client = Client.create();
+			WebResource webResource = client.resource(host + "libraryWS/user");
 
-			WebResource webResource = client.resource("http://www.mconnti.com:8080/libraryWS/user");
 			user.setAdmin(false);
-			ClientResponse response = webResource.type("application/json").post(ClientResponse.class, user);
 
-			if (response.getStatus() != 201) {
-				System.out.println("Failed : HTTP error code : " + response.getStatus());
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, user);
+
+			if (response.getStatus() != 201 && response.getStatus() != 200) {
+				ret.setMessage("Failed : HTTP error code : " + response.getStatus());
+				throw new Exception(ret.getMessage());
 			}
 
-			System.out.println("Output from Server .... \n");
-			MessageReturn ret = response.getEntity(MessageReturn.class);
-			System.out.println(ret.getMessage());
-			FacesMessage message = new FacesMessage(ret.getMessage());
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-			FacesContext.getCurrentInstance().addMessage("", message);
+			ret = response.getEntity(MessageReturn.class);
+
+			if (ret.getUser() == null) {
+				throw new Exception(ret.getMessage());
+			} else {
+				FacesUtil.showSuccessMessage(ret.getMessage());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
 		return "";
 	}
@@ -125,5 +163,13 @@ public class UserMBean implements Serializable {
 
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	public User getLoggedUser() {
+		return loggedUser;
+	}
+
+	public void setLoggedUser(User loggedUser) {
+		this.loggedUser = loggedUser;
 	}
 }

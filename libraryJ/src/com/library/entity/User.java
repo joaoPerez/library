@@ -22,6 +22,13 @@ public class User {
 	private String birth;
 	
 	private Boolean admin;
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ID: "+getId()).append(" - ADMIN: "+getAdmin());
+		return sb.toString();
+	}
 
 	public Long getId() {
 		return id;

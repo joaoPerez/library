@@ -18,19 +18,19 @@ public class FacesUtil {
 		return (String)FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(name);
 	}
 
-	public static void exibirMensagemSucesso(String mensagem) {
-		exibirMensagem(FacesMessage.SEVERITY_INFO, mensagem);
+	public static void showSuccessMessage(String mensagem) {
+		showMessage(FacesMessage.SEVERITY_INFO, mensagem);
 	}
 
-	public static void exibirMensagemAlerta(String mensagem) {
-		exibirMensagem(FacesMessage.SEVERITY_WARN, mensagem);
+	public static void showAlertMessage(String mensagem) {
+		showMessage(FacesMessage.SEVERITY_WARN, mensagem);
 	}
 
-	public static void exibirMensagemErro(String mensagem) {
-		exibirMensagem(FacesMessage.SEVERITY_ERROR, mensagem);
+	public static void showAErrorMessage(String mensagem) {
+		showMessage(FacesMessage.SEVERITY_ERROR, mensagem);
 	}
 
-	private static void exibirMensagem(FacesMessage.Severity severity, String mensagem) {
+	private static void showMessage(FacesMessage.Severity severity, String mensagem) {
 		FacesMessage facesMessage = new FacesMessage(severity, "", mensagem);
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	}

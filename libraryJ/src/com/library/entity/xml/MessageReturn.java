@@ -25,6 +25,13 @@ public class MessageReturn {
 	public Category category;
 	
 	public Author author;
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("MESSAGE: "+getMessage()+" - USER: "+getUser());
+		return sb.toString();
+	}
 
 	public String getMessage() {
 		return message;
