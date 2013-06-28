@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.library.business.UserBO;
-import com.library.entity.Login;
 import com.library.entity.User;
 import com.library.entity.xml.MessageReturn;
 import com.library.persistence.UserDAO;
@@ -29,8 +28,9 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 	@Transactional
 	public MessageReturn save(User user) {
 		MessageReturn libReturn = new MessageReturn();
+		User u = null;
 		try {
-			User u = new User();
+			u = new User();
 			u.setId(user.getId());
 			u.setAddress(user.getAddress());
 			u.setName(user.getName());
@@ -45,12 +45,15 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 			saveGeneric(u);
 		} catch (Exception e) {
 			e.printStackTrace();
+			libReturn.setUser(u);
 			libReturn.setMessage(e.getMessage());
 		}
 		if (libReturn.getMessage() == null && user.getId() == null) {
 			libReturn.setMessage("Usuário Cadastrado com sucesso!");
+			libReturn.setUser(u);
 		} else if (libReturn.getMessage() == null && user.getId() != null){
 			libReturn.setMessage("Usuário alterado com sucesso!");
+			libReturn.setUser(u);
 		}
 		return libReturn;
 	}
@@ -88,9 +91,9 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 	}
 	
 	@Override
-	public MessageReturn login(Login login) {
-		MessageReturn messageReturn = userDAO.getByEmail(login.getEmail());
-		if (!messageReturn.getUser().getPassword().equals(login.getPassword())) {
+	public MessageReturn login(User user) {
+		MessageReturn messageReturn = userDAO.getByEmail(user.getEmail());
+		if (!messageReturn.getUser().getPassword().equals(user.getPassword())) {
 			messageReturn.setUser(null);
 			messageReturn.setMessage("Senha informada esta incorreta!");
 		}else{

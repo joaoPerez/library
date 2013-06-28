@@ -56,6 +56,13 @@ public class User {
 	
 	@Column(nullable = false)
 	private Boolean admin;
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ID: "+getId()).append(" - ADMIN: "+getAdmin());
+		return sb.toString();
+	}
 
 	public Long getId() {
 		return id;
