@@ -35,7 +35,11 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 			u.setAddress(user.getAddress());
 			u.setName(user.getName());
 			u.setAdmin(user.getAdmin());
-			u.setBirthDate(Utils.stringToDate(user.getBirth(), false));
+			if(user.getBirth() != null){
+				u.setBirthDate(Utils.stringToDate(user.getBirth(), false));
+			} else {
+				u.setBirthDate(user.getBirthDate());
+			}			
 			u.setEmail(user.getEmail());
 			u.setPassword(user.getPassword());
 			saveGeneric(u);
