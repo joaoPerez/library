@@ -13,6 +13,7 @@
 		4E255191176A9A430061993C /* images-2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4E25518E176A9A430061993C /* images-2.jpeg */; };
 		4E255192176A9A430061993C /* images-1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4E25518F176A9A430061993C /* images-1.jpeg */; };
 		4E255193176A9A430061993C /* images.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4E255190176A9A430061993C /* images.jpeg */; };
+		4E697C8F177CCDFC00833E2F /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E697C8E177CCDFC00833E2F /* LoginViewController.m */; };
 		4EC11072176A870500FE7679 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC11071176A870500FE7679 /* UIKit.framework */; };
 		4EC11074176A870500FE7679 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC11073176A870500FE7679 /* Foundation.framework */; };
 		4EC11076176A870500FE7679 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC11075176A870500FE7679 /* CoreGraphics.framework */; };
@@ -38,6 +39,8 @@
 		4E25518E176A9A430061993C /* images-2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "images-2.jpeg"; sourceTree = "<group>"; };
 		4E25518F176A9A430061993C /* images-1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "images-1.jpeg"; sourceTree = "<group>"; };
 		4E255190176A9A430061993C /* images.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = images.jpeg; sourceTree = "<group>"; };
+		4E697C8D177CCDFC00833E2F /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		4E697C8E177CCDFC00833E2F /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4EC1106E176A870500FE7679 /* Library-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Library-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EC11071176A870500FE7679 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4EC11073176A870500FE7679 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -145,6 +148,8 @@
 				4E255189176A96760061993C /* AuthorEditViewController.m */,
 				4E25518B176A96840061993C /* UserEditViewController.h */,
 				4E25518C176A96840061993C /* UserEditViewController.m */,
+				4E697C8D177CCDFC00833E2F /* LoginViewController.h */,
+				4E697C8E177CCDFC00833E2F /* LoginViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 				4E255187176A96680061993C /* BookEditViewController.m in Sources */,
 				4E25518A176A96760061993C /* AuthorEditViewController.m in Sources */,
 				4E25518D176A96840061993C /* UserEditViewController.m in Sources */,
+				4E697C8F177CCDFC00833E2F /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

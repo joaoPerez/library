@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     arrayBooks = @[@{@"Autor": @"Bernard Cornwell", @"Livro": @"O Arqueiro", @"Capa": @"images.jpeg"}, @{@"Autor": @"Bernard Cornwell", @"Livro": @"O Andarilho", @"Capa": @"images-1.jpeg"}, @{@"Autor": @"Bernard Cornwell", @"Livro": @"O Herege", @"Capa": @"images-2.jpeg"}, @{@"Autor": @"George R. Martin", @"Livro": @"Game of Thrones", @"Capa": @"images.jpeg"}, @{@"Autor": @"George R. Martin", @"Livro": @"Dance With Dragons", @"Capa": @"images-1.jpeg"}];
 }
 
