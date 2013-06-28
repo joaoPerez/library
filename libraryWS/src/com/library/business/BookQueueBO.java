@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.library.entity.BookQueue;
 import com.library.entity.xml.MessageReturn;
+import com.library.entity.xml.SearchObject;
 
 public interface BookQueueBO extends GenericBO<BookQueue> {
 	
@@ -32,5 +34,14 @@ public interface BookQueueBO extends GenericBO<BookQueue> {
 	@Produces(MediaType.APPLICATION_JSON)
 	public BookQueue getById(@PathParam("id") Long id);
 
-
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public MessageReturn renting(BookQueue bookQueue);
+	
+	@PUT
+	@Path("/listSize")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public MessageReturn waitList(SearchObject searchObject);
 }

@@ -37,6 +37,6 @@ public interface BookBO extends GenericBO<Book> {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Book> serchedList(SearchObject serachObject);
+	public List<Book> searchedList(SearchObject serachObject);
 
 }

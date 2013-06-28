@@ -38,4 +38,6 @@ public interface UserBO extends GenericBO<User>{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public MessageReturn login(Login login);
+	
 }
+

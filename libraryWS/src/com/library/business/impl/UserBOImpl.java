@@ -24,7 +24,7 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 	
 	@Autowired
 	private UserDAO userDAO;
-
+	
 	@Override
 	@Transactional
 	public MessageReturn save(User user) {
@@ -37,6 +37,7 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 			u.setAdmin(user.getAdmin());
 			u.setBirthDate(Utils.stringToDate(user.getBirth(), false));
 			u.setEmail(user.getEmail());
+			u.setPassword(user.getPassword());
 			saveGeneric(u);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,6 +94,4 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 		}
 		return messageReturn;
 	}
-
-
 }

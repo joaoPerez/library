@@ -73,5 +73,4 @@ public class MessageReturn {
 	public void setAuthor(Author author) {
 		this.author = author;
 	}
-	
 }

@@ -80,7 +80,7 @@ public class BookBOImpl extends GenericBOImpl<Book> implements BookBO{
 	}
 
 	@Override
-	public List<Book> serchedList(SearchObject serachObject) {
+	public List<Book> searchedList(SearchObject serachObject) {
 		try {
 			return list(Book.class, serachObject.getQueryParams(), null);
 		} catch (Exception e) {
