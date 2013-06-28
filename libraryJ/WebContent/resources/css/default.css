@@ -17,9 +17,6 @@ h2 {
 	font:1.25em georgia,serif; 
 	margin:0 0 0.5em;
 }
-	h1, h2, a {
-		color:orange;
-	}
 
 p { 
 	line-height:1.5; 
@@ -154,8 +151,8 @@ div#register{
 	border: 0px dotted #000;
 }
 
-.formCadastro{
-	width: 540px;
+.formCadastroUser{
+	width: 380px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	font-weight: bold;
@@ -206,7 +203,7 @@ div#register{
 }
 
 .boxNewUser{
-	width:475px;
+	width:400px;
 	position: absolute;
 	top:70px;
 	border: 0px dotted #000;
@@ -284,6 +281,10 @@ div#boxUsuarioLogado{
    	font-size: 9px !important;
    	font-weight: bold !important;
 	cursor: pointer;
+}
+
+.width30px{
+	width: 100px !important;
 }
 
 .colunaLabe20Porcento{

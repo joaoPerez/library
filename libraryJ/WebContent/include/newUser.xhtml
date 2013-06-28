@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+        	
+      	<h:form id="newUser" prependId="false">
+		    <div id="messages" class="messages">
+	       		<p:messages showDetail="false"  id="msg"/>
+	       	</div>
+	       	
+	       	<div id="boxNewUser" class="boxNewUser">
+	       		<h:panelGrid columns="2" columnClasses="coluna120RightWithPaddingRigth,colunaLabel220" styleClass="formCadastroUser" border="0">
+					<h:outputText value="Nome:" />
+					<p:inputText id="name" label="Nome" required="true"  value="#{userMBean.user.name}" style="width:100%" />
+					
+					<h:outputText value="Data Nacimento:"  />
+					<p:calendar locale="pt_BR" showButtonPanel="true" navigator="true" showOn="button"
+						value="#{userMBean.user.birthDate}"  label="Data Nacimento"
+						required="true" 
+						id="calendar"
+						readonlyInput="true"
+						oninputkeydown="Mascara(this,date);"
+					    oninputkeypress="Mascara(this,date);" 
+					    oninputkeyup="Mascara(this,date);"  
+					    maxlength="10"
+						pattern="dd/MM/yyyy"
+						styleClass="width30px"
+						yearRange="1950:2020"/>
+					
+					<h:outputText value="Endereço:" />
+					<p:inputText id="address" label="Endereço" required="true"  value="#{userMBean.user.address}" style="width:100%" />
+					
+					<h:outputText value="Email:" />
+					<p:inputText id="email" label="Email" required="true" value="#{userMBean.user.email}" style="width:100%" >
+						<p:ajax event="blur" update="msg"  listener="#{userMBean.checkEmail}"  />  
+						<p:ajax event="blur" update="msg"  listener="#{userMBean.existsEmail}" /> 
+					</p:inputText>
+					
+					<h:outputText value="Senha:"/>
+					<p:password id="senha" label="Senha" required="true"  value="#{userMBean.user.password}" size="27" />
+				</h:panelGrid>
+				
+				<br />
+			
+				<div class="messages" align="center">
+					<p:commandButton value="Gravar" 
+						id="gravar" action="#{userMBean.save}" ajax="false" 
+						 styleClass="button" 
+						 oncomplete="newUserModal.hide();">  
+					</p:commandButton>
+					<p:commandButton value="Voltar" immediate="true" id="voltar" ajax="false"  styleClass="button">
+					</p:commandButton>
+				</div>
+	       	</div>
+		</h:form>
+</ui:composition>
