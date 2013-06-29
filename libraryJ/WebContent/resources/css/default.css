@@ -42,7 +42,7 @@ div#main {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	position: absolute;
-	top: 260px;
+	top: 180px;
 }
 
 div#header {
@@ -84,7 +84,7 @@ div#logo{
 	border: 0px dotted #000;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	position: absolute;
-	top: 130px;
+	top: 10px;
 }
 
 .newUser{
@@ -241,8 +241,8 @@ div#boxUsuarioLogado{
 	color: #7C6240;
 	text-decoration: none;
 	border: solid #dfedf8;
-	border-width: 2px 0;
-	top: 100px;
+	border-width: 0px 0;
+	top: 20px;
 	padding-right: 10px;
 }
 

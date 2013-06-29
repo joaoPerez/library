@@ -1,6 +1,7 @@
 package com.library.mbean;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +19,7 @@ import com.library.entity.xml.MessageReturn;
 import com.library.util.FacesUtil;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 
 @SessionScoped
@@ -30,12 +32,18 @@ public class UserMBean implements Serializable {
 	FacesContext fc = FacesContext.getCurrentInstance();
 
 	HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+	
+	private List<User> userList;
 
 	private User user;
 
 	private User loggedUser;
 
+	private User[] selectedUsers;
+
 	private Boolean isAdmin = false;
+	
+	private Boolean showPassword = true;
 
 	Client client = null;
 
@@ -48,7 +56,6 @@ public class UserMBean implements Serializable {
 		if (request instanceof HttpServletRequest) {
 			String[] str = ((HttpServletRequest) request).getRequestURL().toString().split("library");
 			host = str[0];
-			System.out.println(host);
 		}
 	}
 
@@ -76,17 +83,49 @@ public class UserMBean implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(e.getMessage());
+			return "";
 		}
 
 		return "/common/index.xhtml?faces-redirect=true";
 	}
+	
+	private void loadList(){
+		WebResource webResource = client.resource(host + "libraryWS/user");
+		
+		userList = webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<List<User>>(){});
+	}
+
+	public String list() {
+		
+		loadList();
+		
+		return "/common/listUser.xhtml?faces-redirect=true";
+	}
+
+	public String logout() {
+		this.loggedUser = null;
+		return "/libraryJ/index.xhtml?faces-redirect=true";
+	}
 
 	public void newUser() {
 		this.user = new User();
+		showPassword = true;
+	}
+	
+	public void newAdminUser() {
+		this.user = new User();
+		isAdmin = true;
+		showPassword = true;
 	}
 
 	public String cancel() {
+		this.user = new User();
 		return "index.xhtml\faces-redirect=true";
+	}
+
+	public void edit() {
+		isAdmin = true;
+		showPassword = false;
 	}
 
 	public String save() {
@@ -94,7 +133,9 @@ public class UserMBean implements Serializable {
 		try {
 			WebResource webResource = client.resource(host + "libraryWS/user");
 
-			user.setAdmin(false);
+			if(!isAdmin){
+				user.setAdmin(false);
+			}
 
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, user);
 
@@ -110,6 +151,9 @@ public class UserMBean implements Serializable {
 			} else {
 				FacesUtil.showSuccessMessage(ret.getMessage());
 			}
+			if(isAdmin){
+				loadList();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(ret.getMessage());
@@ -118,10 +162,30 @@ public class UserMBean implements Serializable {
 	}
 
 	public void delete() {
+		MessageReturn ret = new MessageReturn();
 		try {
-			// TODO logica de deleção de usuário no server JSON
+			for (User user : selectedUsers) {
+				WebResource webResource = client.resource(host + "libraryWS/user/" + user.getId());
+
+				ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).delete(ClientResponse.class);
+
+				if (response.getStatus() != 201 && response.getStatus() != 200) {
+					ret.setMessage("Failed : HTTP error code : " + response.getStatus());
+					throw new Exception(ret.getMessage());
+				}
+
+				ret = response.getEntity(MessageReturn.class);
+			}
+
+			if (selectedUsers.length > 1) {
+				FacesUtil.showSuccessMessage("Usuários excluidos com sucesso!");
+			} else {
+				FacesUtil.showSuccessMessage(ret.getMessage());
+			}
+			loadList();
 		} catch (Exception e) {
 			e.printStackTrace();
+			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
 	}
 
@@ -171,5 +235,29 @@ public class UserMBean implements Serializable {
 
 	public void setLoggedUser(User loggedUser) {
 		this.loggedUser = loggedUser;
+	}
+
+	public User[] getSelectedUsers() {
+		return selectedUsers;
+	}
+
+	public void setSelectedUsers(User[] selectedUsers) {
+		this.selectedUsers = selectedUsers;
+	}
+
+	public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+
+	public Boolean getShowPassword() {
+		return showPassword;
+	}
+
+	public void setShowPassword(Boolean showPassword) {
+		this.showPassword = showPassword;
 	}
 }

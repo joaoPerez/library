@@ -17,13 +17,12 @@
 
 	<h:body>
 		<div id="container">
-			<!--  comentei para parar o warning
-			<ui:include src="../include/menu.xhtml" />
-			 -->
+			<ui:include src="/include/menu.xhtml"/>
+
 			<div id="boxUsuarioLogado">
 				<h:panelGrid columns="2" width="300">
-					<h:outputText value="Usuario Logado" />
-					<h:outputText value="#{userMBean.loggedUser.name}" />
+					<h:outputText value="Usuario Logado:" />
+					<h:outputText value="#{userMBean.loggedUser.name}" style="text-align:left"/>
 				</h:panelGrid>
 			</div>
 			
@@ -35,7 +34,6 @@
 				<p>Trabalho final de Programação C, professor Ries. Desenvolvido por Anderson Santos, Vitor Leonardi e João Paulo</p>
 			</div>
 		</div>
-		
 	</h:body>
 </f:view>
 </html>
