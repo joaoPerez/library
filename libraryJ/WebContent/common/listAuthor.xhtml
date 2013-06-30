@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        template="../template/templateAPP.xhtml" >
+        
+        
+        <ui:define name="contentAPP">
+	        <h:form prependId="false">
+	        	<h:outputText value="Lista de Livros" styleClass="boxTitulo"/>
+	        	
+	        	<div align="center" style="width: 100%;" >
+	        		<div id="messages" class="messages" style="width: 50%;">
+			       		<p:messages showDetail="true" showSummary="false"  autoUpdate="true" id="mensagem"/>
+			       	</div>
+	        	
+	        		<h:panelGrid columns="2" width="50%" border="0" columnClasses="alignLeft,alignRight">
+		        		<p:commandButton value="Excluir" styleClass="button" onclick="confirmation.show()" />
+		        		<p:commandButton value="Novo" 
+		        			action="#{authorMBean.newAuthor}"  
+		        			styleClass="button" 
+		        			update=":newAuthor" 
+		        			id="newButton"
+		        			oncomplete="newAuthorModal.show()" >
+		        		</p:commandButton>
+				    </h:panelGrid>
+				   
+				    <p:dataTable var="cat" value="#{authorMBean.authorList}" style="width:50%" id="authorList"
+				    		paginatorAlwaysVisible="false" paginator="true" emptyMessage="Lista de Autores vazia"
+				    		rows="10" selection="#{authorMBean.selectedAuthors}" rowKey="#{cat}" 
+				    		paginatorPosition="botton" >
+				    	
+				    	<p:column selectionMode="multiple" style="text-align:center"  />
+				        
+				        <p:column sortBy="#{cat.name}" >
+				            <f:facet name="header">
+				                <h:outputText value="Nome" />
+				            </f:facet>
+				            <h:outputText value="#{cat.name}" />
+				        </p:column>
+				        
+				        <p:column >
+				        	<p:commandLink action="#{authorMBean.edit}" update=":newAuthor" oncomplete="newAuthorModal.show();" id="editButton">
+				        		<f:setPropertyActionListener value="#{cat}" target="#{authorMBean.author}" />  
+								<p:graphicImage value="/resources/images/bt_edit.gif" style="border: 0px" />
+							</p:commandLink>
+				        </p:column>
+				    </p:dataTable>
+				</div>	
+				<p:confirmDialog message="Confirma a Exclusão dos Autores selecionados?" header="Confirmação" severity="alert" widgetVar="confirmation">  
+                  	<div align="center">
+				        <p:commandButton value="Sim" update="authorList,mensagem" oncomplete="confirmation.hide()" action="#{authorMBean.delete}"/>  
+				        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" />   
+	                 </div> 
+	    		</p:confirmDialog>  		
+			</h:form>  
+			<p:dialog header="Cadastro de Autor" resizable="false" widgetVar="newAuthorModal" modal="true" appendToBody="true" height="300" width="480">  
+			    <ui:include src="/include/formAuthor.xhtml" />
+			</p:dialog>
+        </ui:define>
+</ui:composition>
