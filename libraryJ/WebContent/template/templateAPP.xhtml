@@ -20,15 +20,20 @@
 			<ui:include src="/include/menu.xhtml"/>
 
 			<div id="boxUsuarioLogado">
-				<h:panelGrid columns="2" width="300">
+				<h:panelGrid columns="2" width="300" rendered="#{userMBean.loggedUser != null}">
 					<h:outputText value="Usuario Logado:" />
 					<h:outputText value="#{userMBean.loggedUser.name}" style="text-align:left"/>
 				</h:panelGrid>
 			</div>
 			
-			<div id="main">
-				<ui:insert name="contentAPP"></ui:insert>
-			</div>
+			<h:panelGrid  styleClass="notLoggedMessage" rendered="#{userMBean.loggedUser == null}">
+				<h:outputText value="Precisa estar logado para acessar o sistema." />
+				<h:outputLink value="#{userMBean.logoutURL}">Voltar</h:outputLink>
+			</h:panelGrid>
+			
+			<h:panelGrid rendered="#{userMBean.loggedUser != null}" styleClass="main">
+				<ui:insert name="contentAPP"/>
+			</h:panelGrid>
 						
 			<div id="footer">
 				<p>Trabalho final de Programação C, professor Ries. Desenvolvido por Anderson Santos, Vitor Leonardi e João Paulo</p>

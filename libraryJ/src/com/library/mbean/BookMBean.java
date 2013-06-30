@@ -47,8 +47,9 @@ public class BookMBean implements Serializable {
 			String[] str = ((HttpServletRequest) request).getRequestURL().toString().split("library");
 			host = str[0];
 		}
+		loadList();
 	}
-
+	
 	private void loadList(){
 		WebResource webResource = client.resource(host + "libraryWS/book");
 		
@@ -59,7 +60,7 @@ public class BookMBean implements Serializable {
 		
 		loadList();
 		
-		return "/common/listBook.xhtml?faces-redirect=true";
+		return "/common/index.xhtml?faces-redirect=true";
 	}
 
 	public void newBook() {

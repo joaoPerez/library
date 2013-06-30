@@ -35,7 +35,7 @@ div#container {
 	min-height:100%; /* real browsers */
 }
 
-div#main {
+.main {
 	width: 99.5%;
 	height:auto !important; /* real browsers */
 	border: 0px dotted #000;
@@ -151,6 +151,17 @@ div#register{
 	border: 0px dotted #000;
 }
 
+.notLoggedMessage{
+	width: 100%;
+	top:45%;
+	position: absolute;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-align:center;
+	border: 0px dotted #000;
+}
+
 .formCadastroUser{
 	width: 380px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -209,8 +220,22 @@ div#register{
 	border: 0px dotted #000;
 }
 
+.boxNewBook{
+	width:400px;
+	position: absolute;
+	top:70px;
+	border: 0px dotted #000;
+}
+
+.boxNewAuthor{
+	width:400px;
+	position: absolute;
+	top:70px;
+	border: 0px dotted #000;
+}
+
 .boxNewCategory{
-	width:380px;
+	width:400px;
 	position: absolute;
 	border: 0px dotted #000;
 	top:70px;
@@ -381,6 +406,11 @@ div#boxUsuarioLogado{
 	border: 0px dotted #000;
 }
 
+.coluna290{
+	width: 290px;
+	border: 0px dotted #000;
+}
+
 .coluna310{
 	width: 310px;
 	border: 0px dotted #000;
@@ -411,10 +441,16 @@ div#boxUsuarioLogado{
 	width: 100px ;
 }
 
-.menuBla{
-	border:1px dotted #000;
+.menuItem{
+	border:0px dotted #000;
 	margin-left: 20px;
 	margin-right: 20px;
+}
+
+.menuLogout{
+	border:0px dotted #000;
+	margin-right: 20px;
+	margin-left: 50%;
 }
 
 .autoSize{

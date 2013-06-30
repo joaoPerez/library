@@ -7,12 +7,12 @@
         <h:form prependId="false">
         	
         	<div class="menu">
-		       	<p:menubar autoSubmenuDisplay="true" rendered="#{userMBean.loggedUser.admin}">
-					<p:menuitem value="Livro" action="#{bookMBean.list}" ajax="false" styleClass="menuBla"/>
-					<p:menuitem value="Autor" action="#{authorMBean.list}" ajax="false" styleClass="menuBla"/>
-					<p:menuitem value="Categoria" action="#{categoryMBean.list}" ajax="false" styleClass="menuBla"/>
-					<p:menuitem value="Usuário" action="#{userMBean.list}" ajax="false" styleClass="menuBla"/>
-					<p:menuitem value="Logout" action="#{userMBean.logout}" url="#{userMBean.logoutURL}" ajax="false" styleClass="menuBla"/>
+		       	<p:menubar autoSubmenuDisplay="true" rendered="#{userMBean.loggedUser != null}">
+		       		<p:menuitem value="Livro" action="#{bookMBean.list}" ajax="false" styleClass="menuItem" rendered="#{userMBean.loggedUser.admin}"/>
+					<p:menuitem value="Autor" action="#{authorMBean.list}" ajax="false" styleClass="menuItem" rendered="#{userMBean.loggedUser.admin}"/>
+					<p:menuitem value="Categoria" action="#{categoryMBean.list}" ajax="false" styleClass="menuItem" rendered="#{userMBean.loggedUser.admin}"/>
+					<p:menuitem value="Usuário" action="#{userMBean.list}" ajax="false" styleClass="menuItem" rendered="#{userMBean.loggedUser.admin}"/>
+					<p:menuitem value="Logout" action="#{userMBean.logout}" url="#{userMBean.logoutURL}" ajax="false" styleClass="menuItem"/>
 				</p:menubar>
 			</div>
 			

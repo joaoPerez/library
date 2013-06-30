@@ -59,6 +59,7 @@ public class UserMBean implements Serializable {
 			String[] str = ((HttpServletRequest) request).getRequestURL().toString().split("library");
 			host = str[0];
 		}
+		logoutURL = host+"/libraryJ";
 	}
 
 	public String login() {
@@ -81,7 +82,6 @@ public class UserMBean implements Serializable {
 			} else {
 				loggedUser = ret.getUser();
 				FacesUtil.showSuccessMessage(ret.getMessage());
-				logoutURL = host+"/libraryJ";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,7 +107,7 @@ public class UserMBean implements Serializable {
 
 	public String logout() {
 		this.loggedUser = null;
-		return "/libraryJ/index.xhtml?faces-redirect=true";
+		return logoutURL;
 	}
 
 	public void newUser() {
