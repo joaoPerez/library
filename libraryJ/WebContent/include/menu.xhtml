@@ -12,7 +12,7 @@
 					<p:menuitem value="Autor" action="#{authorMBean.list}" ajax="false" styleClass="menuBla"/>
 					<p:menuitem value="Categoria" action="#{categoryMBean.list}" ajax="false" styleClass="menuBla"/>
 					<p:menuitem value="Usuário" action="#{userMBean.list}" ajax="false" styleClass="menuBla"/>
-					<p:menuitem value="Logout" action="#{userMBean.logout}" url="http://localhost:8080/libraryJ" ajax="false" styleClass="menuBla"/>
+					<p:menuitem value="Logout" action="#{userMBean.logout}" url="#{userMBean.logoutURL}" ajax="false" styleClass="menuBla"/>
 				</p:menubar>
 			</div>
 			

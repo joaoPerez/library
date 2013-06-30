@@ -44,6 +44,8 @@ public class UserMBean implements Serializable {
 	private Boolean isAdmin = false;
 	
 	private Boolean showPassword = true;
+	
+	private String logoutURL;
 
 	Client client = null;
 
@@ -79,6 +81,7 @@ public class UserMBean implements Serializable {
 			} else {
 				loggedUser = ret.getUser();
 				FacesUtil.showSuccessMessage(ret.getMessage());
+				logoutURL = host+"/libraryJ";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -259,5 +262,13 @@ public class UserMBean implements Serializable {
 
 	public void setShowPassword(Boolean showPassword) {
 		this.showPassword = showPassword;
+	}
+
+	public String getLogoutURL() {
+		return logoutURL;
+	}
+
+	public void setLogoutURL(String logoutURL) {
+		this.logoutURL = logoutURL;
 	}
 }
