@@ -57,12 +57,10 @@
 			            <f:facet name="header">
 			                <h:outputText value="Status" />
 			            </f:facet>
-			            <p:commandLink id="availableRentButton" rendered="#{bookMBean.book.available}">
-							<p:graphicImage value="/resources/images/green.png" style="border: 0px" />
-						</p:commandLink>
-						<p:commandLink id="notAvailableRentButton" rendered="#{!bookMBean.book.available}">
-							<p:graphicImage value="/resources/images/red.png" style="border: 0px" />
-						</p:commandLink>
+			            <p:commandLink action="#{bookMBean.edit}" update=":newBook" oncomplete="newBookModal.show();" id="selectBook">
+				            <p:graphicImage value="/resources/images/green.png" style="border: 0px" rendered="#{cat.available}" title="Disponível para locação, clique para fazer a reserva."/>
+				            <p:graphicImage value="/resources/images/red.png" style="border: 0px" rendered="#{!cat.available}" title="Não disponível, clique caso queira entrar na fila de espera."/>
+			            </p:commandLink>
 			        </p:column>
 			        
 			        <p:column rendered="#{userMBean.loggedUser.admin}" style="width:5%">
