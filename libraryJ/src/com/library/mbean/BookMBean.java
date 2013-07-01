@@ -42,6 +42,10 @@ public class BookMBean implements Serializable {
 	public SelectItem[] categories;
 	
 	private List<Category> categoryList; 
+	
+	private Category category;
+	
+	private Author author;
 
 	private Book book;
 
@@ -54,8 +58,11 @@ public class BookMBean implements Serializable {
 	public BookMBean() {
 		client = Client.create();
 		this.book = new Book();
-		this.book.setAuthor(new Author());
-		this.book.setCategory(new Category());
+		author = new Author();
+		category = new Category();
+		this.book.setAuthor(author);
+		this.book.setCategory(category);
+		
 		Object request = FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		if (request instanceof HttpServletRequest) {
 			String[] str = ((HttpServletRequest) request).getRequestURL().toString().split("library");
@@ -79,15 +86,23 @@ public class BookMBean implements Serializable {
 
 	public void newBook() {
 		this.book = new Book();
+		this.author = new Author();
+		this.category = new Category();
 	}
 
 	public void edit() {
+		this.author = book.getAuthor();
+		this.category = book.getCategory();
+		System.out.println("");
 	}
 
 	public String save() {
 		MessageReturn ret = new MessageReturn();
 		try {
 			WebResource webResource = client.resource(host + "libraryWS/book");
+			this.book.setAuthor(author);
+			this.book.setCategory(category);
+			this.book.setAvailable(true);
 
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, book);
 
@@ -214,6 +229,22 @@ public class BookMBean implements Serializable {
 
 	public void setCategories(SelectItem[] categories) {
 		this.categories = categories;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Author getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Author author) {
+		this.author = author;
 	}
 
 }
