@@ -40,6 +40,13 @@
 				            <h:outputText value="#{cat.title}" />
 				        </p:column>
 				        
+				        <p:column sortBy="#{cat.author}" >
+				            <f:facet name="header">
+				                <h:outputText value="Autor" />
+				            </f:facet>
+				            <h:outputText value="#{cat.author}" />
+				        </p:column>
+				        
 				        <p:column >
 				        	<p:commandLink action="#{bookMBean.edit}" update=":newBook" oncomplete="newBookModal.show();" id="editButton">
 				        		<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
@@ -47,7 +54,7 @@
 							</p:commandLink>
 				        </p:column>
 				    </p:dataTable>
-				</div>	
+				</div>
 				<p:confirmDialog message="Confirma a Exclusão dos Livros selecionados?" header="Confirmação" severity="alert" widgetVar="confirmation">  
                   	<div align="center">
 				        <p:commandButton value="Sim" update="bookList,mensagem" oncomplete="confirmation.hide()" action="#{bookMBean.delete}"/>  
@@ -55,7 +62,7 @@
 	                 </div> 
 	    		</p:confirmDialog>  		
 			</h:form>  
-			<p:dialog header="Cadastro de Livro" resizable="false" widgetVar="newBookModal" modal="true" appendToBody="true" height="300" width="480">  
+			<p:dialog header="Cadastro de Livro" resizable="false" widgetVar="newBookModal" modal="true" appendToBody="true" height="300" width="420">  
 			    <ui:include src="/include/formBook.xhtml" />
 			</p:dialog>
         </ui:define>

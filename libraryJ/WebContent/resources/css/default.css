@@ -162,15 +162,6 @@ div#register{
 	border: 0px dotted #000;
 }
 
-.formCadastroUser{
-	width: 380px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	padding-right: 10px;
-	border: 0px dotted #000;
-}
-
 .infoLogo{
 	width: 600px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -221,9 +212,14 @@ div#register{
 }
 
 .boxNewBook{
-	width:400px;
+	width:480px;
 	position: absolute;
-	top:70px;
+	top:40px;
+	border: 0px dotted #000;
+}
+
+.buttonNewBook{
+	width:480px;
 	border: 0px dotted #000;
 }
 
@@ -328,6 +324,12 @@ div#boxUsuarioLogado{
 	border: 0px dotted #000;
 }
 
+.colunaLabel70Right{
+	width: 70px  !important;
+	text-align: right;
+	border: 0px dotted #000 !important;
+}
+
 .colunaLabel70Center{
 	width: 70px !important;
 	text-align: center;
@@ -342,6 +344,7 @@ div#boxUsuarioLogado{
 
 .colunaLabel100{
 	width:100px  !important;
+	border: 0px dotted #000 !important;
 }
 
 .colunaLabe100Porcento{

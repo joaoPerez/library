@@ -1,11 +1,14 @@
 package com.library.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class User {
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 8587739960376118477L;
 
 	private Long id;
 

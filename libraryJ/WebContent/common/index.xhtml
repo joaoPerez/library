@@ -14,7 +14,7 @@
 		       		<p:messages showDetail="true" showSummary="false"  autoUpdate="true" id="mensagem"/>
 		       	</div>
         	
-        		<h:panelGrid columns="2" width="50%" border="0" columnClasses="alignLeft,alignRight" rendered="#{userMBean.loggedUser.admin}">
+        		<h:panelGrid columns="2" width="70%" border="0" columnClasses="alignLeft,alignRight" rendered="#{userMBean.loggedUser.admin}">
 	        		<p:commandButton value="Excluir" styleClass="button" onclick="confirmation.show()" />
 	        		<p:commandButton value="Novo" 
 	        			action="#{bookMBean.newBook}"  
@@ -25,21 +25,49 @@
 	        		</p:commandButton>
 			    </h:panelGrid>
 			   
-			    <p:dataTable var="cat" value="#{bookMBean.bookList}" style="width:50%" id="bookList"
+			    <p:dataTable var="cat" value="#{bookMBean.bookList}" style="width:70%" id="bookList"
 			    		paginatorAlwaysVisible="false" paginator="true" emptyMessage="Lista de Livros vazia"
 			    		rows="10" selection="#{bookMBean.selectedBooks}" rowKey="#{cat}" 
 			    		paginatorPosition="botton" >
 			    	
-			    	<p:column selectionMode="multiple" style="text-align:center"  />
+			    	<p:column selectionMode="multiple" style="text-align:center;width:5%"  />
 			        
-			        <p:column sortBy="#{cat.title}" >
+			        <p:column sortBy="#{cat.title}" style="width:45%">
 			            <f:facet name="header">
 			                <h:outputText value="Titulo" />
 			            </f:facet>
 			            <h:outputText value="#{cat.title}" />
 			        </p:column>
 			        
-			        <p:column >
+			        <p:column sortBy="#{cat.author.name}" style="width:25%">
+			            <f:facet name="header">
+			                <h:outputText value="Autor" />
+			            </f:facet>
+			            <h:outputText value="#{cat.author.name}" />
+			        </p:column>
+			        
+			        <p:column sortBy="#{cat.category.type}" style="width:15%">
+			            <f:facet name="header">
+			                <h:outputText value="Categoria" />
+			            </f:facet>
+			            <h:outputText value="#{cat.category.type}" />
+			        </p:column>
+			        
+			        <p:column sortBy="#{cat.available}" style="text-align:center;width:10%">
+			            <f:facet name="header">
+			                <h:outputText value="Status" />
+			            </f:facet>
+			            <p:commandLink action="#{bookMBean.edit}" update=":newBook" oncomplete="newBookModal.show();" id="availableRentButton" rendered="#{bookMBean.book.available}">
+			        		<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
+							<p:graphicImage value="/resources/images/green.png" style="border: 0px" />
+						</p:commandLink>
+						<p:commandLink action="#{bookMBean.edit}" update=":newBook" oncomplete="newBookModal.show();" id="notAvailableRentButton" rendered="#{!bookMBean.book.available}">
+			        		<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
+							<p:graphicImage value="/resources/images/red.png" style="border: 0px" />
+						</p:commandLink>
+			        </p:column>
+			        
+			        <p:column rendered="#{userMBean.loggedUser.admin}" style="width:5%">
 			        	<p:commandLink action="#{bookMBean.edit}" update=":newBook" oncomplete="newBookModal.show();" id="editButton">
 			        		<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
 							<p:graphicImage value="/resources/images/bt_edit.gif" style="border: 0px" />
@@ -54,7 +82,7 @@
                  </div> 
     		</p:confirmDialog>  		
 		</h:form>  
-		<p:dialog header="Cadastro de Livro" resizable="false" widgetVar="newBookModal" modal="true" appendToBody="true" height="300" width="480">  
+		<p:dialog header="Cadastro de Livro" resizable="false" widgetVar="newBookModal" modal="true" appendToBody="true" height="400" width="500">  
 		    <ui:include src="/include/formBook.xhtml" />
 		</p:dialog>
 	</ui:define>

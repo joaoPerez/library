@@ -1,9 +1,13 @@
 package com.library.entity;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Category {
+public class Category implements Serializable{
+
+	private static final long serialVersionUID = 1785935916398958423L;
 
 	private Long id;
 

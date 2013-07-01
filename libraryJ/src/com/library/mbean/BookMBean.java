@@ -1,16 +1,20 @@
 package com.library.mbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.MediaType;
 
+import com.library.entity.Author;
 import com.library.entity.Book;
+import com.library.entity.Category;
 import com.library.entity.xml.MessageReturn;
 import com.library.util.FacesUtil;
 import com.sun.jersey.api.client.Client;
@@ -30,6 +34,14 @@ public class BookMBean implements Serializable {
 	HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 	
 	private List<Book> bookList;
+	
+	private List<Author> authorList;
+	
+	public SelectItem[] authores;
+	
+	public SelectItem[] categories;
+	
+	private List<Category> categoryList; 
 
 	private Book book;
 
@@ -42,6 +54,8 @@ public class BookMBean implements Serializable {
 	public BookMBean() {
 		client = Client.create();
 		this.book = new Book();
+		this.book.setAuthor(new Author());
+		this.book.setCategory(new Category());
 		Object request = FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		if (request instanceof HttpServletRequest) {
 			String[] str = ((HttpServletRequest) request).getRequestURL().toString().split("library");
@@ -120,6 +134,39 @@ public class BookMBean implements Serializable {
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
 	}
+	
+	public SelectItem[] getAuthores() {
+		WebResource webResource = client.resource(host + "libraryWS/author");
+		
+		authorList = webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<List<Author>>(){});
+
+		List<SelectItem> itens = new ArrayList<SelectItem>(authorList.size());
+
+		this.authores = new SelectItem[itens.size()];
+
+		itens.add(new SelectItem(0, "Selecione..."));
+		for (Author a : authorList) {
+			itens.add(new SelectItem(a.getId(), a.getName()));
+		}
+		return itens.toArray(new SelectItem[itens.size()]);
+	}
+	
+	public SelectItem[] getCategories() {
+
+		WebResource webResource = client.resource(host + "libraryWS/category");
+		
+		categoryList = webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<List<Category>>(){});
+
+		List<SelectItem> itens = new ArrayList<SelectItem>(categoryList.size());
+
+		this.categories = new SelectItem[itens.size()];
+
+		itens.add(new SelectItem(0, "Selecione..."));
+		for (Category c : categoryList) {
+			itens.add(new SelectItem(c.getId(), c.getType()));
+		}
+		return itens.toArray(new SelectItem[itens.size()]);
+	}
 
 	public Book getBook() {
 		return book;
@@ -143,6 +190,30 @@ public class BookMBean implements Serializable {
 
 	public void setBookList(List<Book> bookList) {
 		this.bookList = bookList;
+	}
+
+	public List<Author> getAuthorList() {
+		return authorList;
+	}
+
+	public void setAuthorList(List<Author> authorList) {
+		this.authorList = authorList;
+	}
+
+	public List<Category> getCategoryList() {
+		return categoryList;
+	}
+
+	public void setCategoryList(List<Category> categoryList) {
+		this.categoryList = categoryList;
+	}
+
+	public void setAuthores(SelectItem[] authores) {
+		this.authores = authores;
+	}
+
+	public void setCategories(SelectItem[] categories) {
+		this.categories = categories;
 	}
 
 }

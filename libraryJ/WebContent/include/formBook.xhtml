@@ -10,15 +10,36 @@
 	       	</div>
 	       	
 	       	<div id="boxNewBook" class="boxNewBook">
-	       		<h:panelGrid columns="2" columnClasses="coluna120RightWithPaddingRigth,colunaLabel220" styleClass="formCadastroBook" border="0">
+	       		<h:panelGrid columns="2" columnClasses="colunaLabel60,coluna290" styleClass="formCadastroBook" border="0">
 					<h:outputText value="Titulo:" />
-					<p:inputText id="name" label="Titulo" required="true"  value="#{bookMBean.book.title}" style="width:100%" />
+					<p:inputText id="name" label="Titulo" required="true"  value="#{bookMBean.book.title}" style="width:97%" />
 
+					<h:outputText value="Descrição:" />
+					<p:inputTextarea rows="10" cols="60" counter="counter" maxlength="300" label="Descrição" required="true"
+					    counterTemplate="{0} caracteres restantes." autoResize="false" value="#{bookMBean.book.description}"/>
+					<h:outputText  />
+					<h:outputText id="counter" />
+					
+					
+					<h:outputText value="Publicado:" />
+					<p:inputText id="publicado" label="Publicado" required="true" maxlength="4" value="#{bookMBean.book.yearOfPublished}" size="2" />
+				</h:panelGrid>
+				
+				<h:panelGrid columns="4" columnClasses="colunaLabel70Right,colunaLabel200,colunaLabel70Right,colunaLabel100"  border="0">
+					<h:outputText value="Autor:" />
+					<p:selectOneMenu value="#{bookMBean.book.author.id}" label="Autor" required="true" style="width:100%">
+			            <f:selectItems value="#{bookMBean.authores}"  var="a" itemLabel="#{a.name}" itemValue="#{a}"/>  
+			        </p:selectOneMenu>
+			        
+			        <h:outputText value="Categoria:"  />
+					<p:selectOneMenu value="#{bookMBean.book.category.id}" label="Categoria" required="true" >
+			            <f:selectItems value="#{bookMBean.categories}" var="c" itemLabel="#{c.type}" itemValue="#{c}"/>  
+			        </p:selectOneMenu>
 				</h:panelGrid>
 				
 				<br />
 			
-				<div class="messages" align="center">
+				<div class="buttonNewBook" align="center">
 					<p:commandButton value="Gravar" 
 						id="gravar" action="#{bookMBean.save}" ajax="false" 
 						styleClass="button" 
