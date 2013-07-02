@@ -91,10 +91,13 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 		MessageReturn messageReturn = new MessageReturn();
 		try {
 			Book book = bookDAO.findById(Book.class, bookQueue.getBook().getId());
+			User user = userDAO.findById(User.class, bookQueue.getUser().getId());
+
 			Map<String, String> queryParams = new HashMap<>();
-			queryParams.put("user", "= " + bookQueue.getUser());
+			queryParams.put("user", "= " + user.getId());
 			queryParams.put("renting", "= true");
-			List<BookQueue> list = list(BookQueue.class, null, null);
+			
+			List<BookQueue> list = list(BookQueue.class, queryParams, null);
 
 			if (list.size() > 0) {
 				messageReturn.setMessage("É permitida a locação de somente um livro por vez.");
@@ -104,7 +107,7 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 			if (book.getAvailable()) {
 				book.setAvailable(false);
 				bookDAO.save(book);
-				User user = userDAO.findById(User.class, bookQueue.getUser().getId());
+				
 				user.getBookList().add(book);
 				userDAO.save(user);
 

@@ -57,7 +57,7 @@
 			            <f:facet name="header">
 			                <h:outputText value="Status" />
 			            </f:facet>
-			            <p:commandLink action="#{bookMBean.rent}" id="rentLink" rendered="#{cat.available}">
+			            <p:commandLink action="#{bookMBean.rent}" update=":index" id="rentLink" rendered="#{cat.available}">
 			            	<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
 				            <p:graphicImage value="/resources/images/green.png" style="border: 0px"   title="Disponível para locação, clique para fazer a reserva."/>
 			            </p:commandLink>
