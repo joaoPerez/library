@@ -1,5 +1,6 @@
 package com.library.entity.xml;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,6 +21,9 @@ public class SearchObject {
 	}
 
 	public Map<String, String> getQueryParams() {
+		if(queryParams == null){
+			queryParams = new HashMap<String, String>();
+		}
 		return queryParams;
 	}
 

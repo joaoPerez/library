@@ -72,8 +72,6 @@ div#logo{
 	border: 0px dotted #000;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	position: absolute;
-	top: 120px;
 }
 
 .menu {
@@ -185,6 +183,11 @@ div#register{
 .form{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
+	font-weight: bold;
+}
+
+.fontMessage{
+	font-size: 12px;
 	font-weight: bold;
 }
 

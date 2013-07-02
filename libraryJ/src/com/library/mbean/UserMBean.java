@@ -232,14 +232,6 @@ public class UserMBean implements Serializable {
 		this.isAdmin = isAdmin;
 	}
 
-	public User getLoggedUser() {
-		return loggedUser;
-	}
-
-	public void setLoggedUser(User loggedUser) {
-		this.loggedUser = loggedUser;
-	}
-
 	public User[] getSelectedUsers() {
 		return selectedUsers;
 	}
@@ -271,4 +263,13 @@ public class UserMBean implements Serializable {
 	public void setLogoutURL(String logoutURL) {
 		this.logoutURL = logoutURL;
 	}
+
+	public User getLoggedUser() {
+		return loggedUser;
+	}
+
+	public void setLoggedUser(User loggedUser) {
+		this.loggedUser = loggedUser;
+	}
+
 }

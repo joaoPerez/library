@@ -82,6 +82,12 @@ exemplo de queryParams usando like
      }
 }
 
+exemplo de searchObject  para saber o numeor de usuários na fila do livro - URL http://localhost:8080/libraryWS/bookQueue/listSize
+{
+"queryParams": { 
+        "entry":{"key":"book","value":" = 2"}
+     }
+}
 ############################
 Login 
 para fazer o login, passamos o email e o password do user

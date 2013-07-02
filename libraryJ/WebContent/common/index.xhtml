@@ -57,9 +57,13 @@
 			            <f:facet name="header">
 			                <h:outputText value="Status" />
 			            </f:facet>
-			            <p:commandLink action="#{bookMBean.edit}" update=":newBook" oncomplete="newBookModal.show();" id="selectBook">
-				            <p:graphicImage value="/resources/images/green.png" style="border: 0px" rendered="#{cat.available}" title="Disponível para locação, clique para fazer a reserva."/>
-				            <p:graphicImage value="/resources/images/red.png" style="border: 0px" rendered="#{!cat.available}" title="Não disponível, clique caso queira entrar na fila de espera."/>
+			            <p:commandLink action="#{bookMBean.edit}" oncomplete="confirmRentModal.show();" id="rentLink" rendered="#{cat.available}">
+			            	<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
+				            <p:graphicImage value="/resources/images/green.png" style="border: 0px"   title="Disponível para locação, clique para fazer a reserva."/>
+			            </p:commandLink>
+			            <p:commandLink action="#{bookMBean.getQueueSize}" update=":queue" oncomplete="queueModal.show();" id="queueLink" rendered="#{!cat.available}">
+			            	<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
+				            <p:graphicImage value="/resources/images/red.png"   style="border: 0px"  title="Não disponível, clique caso queira entrar na fila de espera."/>
 			            </p:commandLink>
 			        </p:column>
 			        
@@ -72,14 +76,28 @@
 			    </p:dataTable>
 			</div>	
 			<p:confirmDialog message="Confirma a Exclusão dos Livros selecionados?" header="Confirmação" severity="alert" widgetVar="confirmation">  
-                 	<div align="center">
+            	<div align="center">
 			        <p:commandButton value="Sim" update="bookList,mensagem" oncomplete="confirmation.hide()" action="#{bookMBean.delete}"/>  
 			        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" />   
-                 </div> 
+                </div> 
     		</p:confirmDialog>  		
 		</h:form>  
 		<p:dialog header="Cadastro de Livro" resizable="false" widgetVar="newBookModal" modal="true" appendToBody="true" height="400" width="500">  
 		    <ui:include src="/include/formBook.xhtml" />
+		</p:dialog>
+		
+		<p:dialog header="Livro não disponível" resizable="false" widgetVar="queueModal" modal="true" appendToBody="true" height="100" width="450">  
+			<h:form id="queue" prependId="false" >
+				<p:panel>
+					<div align="center">
+						<p><h:outputText value="#{bookMBean.queueTip}" styleClass="fontMessage"/></p>
+					</div>
+					<div align="center">
+				        <p:commandButton value="Sim"  oncomplete="queueModal.hide()" action="#{bookMBean.insertOnQueue}" styleClass="button"/>  
+				        <p:commandButton value="Não" onclick="queueModal.hide()" styleClass="button" />   
+	                </div>
+	            </p:panel> 
+			</h:form>
 		</p:dialog>
 	</ui:define>
 </ui:composition>

@@ -125,7 +125,11 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 		try {
 			searchObject.getQueryParams().put("renting", " = false");
 			List<BookQueue> list = list(BookQueue.class, searchObject.getQueryParams(), null);
-			messageReturn.setMessage("A fila de espera deste livro é de: " + list.size() + " usuário");
+			if(list.size()==0){
+				messageReturn.setMessage("Você é o próximo da fila, deseja aguardar.");
+			}else{
+				messageReturn.setMessage("A fila de espera deste livro é de: " + list.size() + " usuário(s), deseja aguardar.");
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
