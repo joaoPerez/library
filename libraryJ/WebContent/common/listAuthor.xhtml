@@ -31,7 +31,7 @@
 				    		rows="10" selection="#{authorMBean.selectedAuthors}" rowKey="#{cat}" 
 				    		paginatorPosition="botton" >
 				    	
-				    	<p:column selectionMode="multiple" style="text-align:center"  />
+				    	<p:column selectionMode="multiple" style="text-align:center;width:5%"  />
 				        
 				        <p:column sortBy="#{cat.name}" >
 				            <f:facet name="header">
@@ -40,7 +40,7 @@
 				            <h:outputText value="#{cat.name}" />
 				        </p:column>
 				        
-				        <p:column >
+				        <p:column style="width:5%">
 				        	<p:commandLink action="#{authorMBean.edit}" update=":newAuthor" oncomplete="newAuthorModal.show();" id="editButton">
 				        		<f:setPropertyActionListener value="#{cat}" target="#{authorMBean.author}" />  
 								<p:graphicImage value="/resources/images/bt_edit.gif" style="border: 0px" />
@@ -51,7 +51,7 @@
 				<p:confirmDialog message="Confirma a Exclusão dos Autores selecionados?" header="Confirmação" severity="alert" widgetVar="confirmation">  
                   	<div align="center">
 				        <p:commandButton value="Sim" update="authorList,mensagem" oncomplete="confirmation.hide()" action="#{authorMBean.delete}"/>  
-				        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" />   
+				        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" action="#{authorMBean.cancel}"/>   
 	                 </div> 
 	    		</p:confirmDialog>  		
 			</h:form>  

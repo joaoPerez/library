@@ -31,7 +31,7 @@
 				    		rows="10" selection="#{userMBean.selectedUsers}" rowKey="#{cat}" 
 				    		paginatorPosition="botton" >
 				    	
-				    	<p:column selectionMode="multiple" style="text-align:center"  />
+				    	<p:column selectionMode="multiple" style="text-align:center;width:5%"  />
 				        
 				        <p:column sortBy="#{cat.name}" >
 				            <f:facet name="header">
@@ -54,7 +54,7 @@
 				            <h:outputText value="#{cat.admin}" />
 				        </p:column>
 				
-				        <p:column >
+				        <p:column style="width:5%">
 				        	<p:commandLink action="#{userMBean.edit}" update=":newUser" oncomplete="newUserModal.show();" id="editButton">
 				        		<f:setPropertyActionListener value="#{cat}" target="#{userMBean.user}" />  
 								<p:graphicImage value="/resources/images/bt_edit.gif" style="border: 0px" />
@@ -65,7 +65,7 @@
 				<p:confirmDialog message="Confirma a Exclusão dos usuários selecionados?" header="Confirmação" severity="alert" widgetVar="confirmation">  
                   	<div align="center">
 				        <p:commandButton value="Sim" update="userList,mensagem" oncomplete="confirmation.hide()" action="#{userMBean.delete}"/>  
-				        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" />   
+				        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" action="#{userMBean.cancelLogged}"/>   
 	                 </div> 
 	    		</p:confirmDialog>  		
 			</h:form>  

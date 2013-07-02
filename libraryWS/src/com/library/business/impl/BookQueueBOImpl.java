@@ -1,7 +1,9 @@
 package com.library.business.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Path;
 
@@ -89,6 +91,16 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 		MessageReturn messageReturn = new MessageReturn();
 		try {
 			Book book = bookDAO.findById(Book.class, bookQueue.getBook().getId());
+			Map<String, String> queryParams = new HashMap<>();
+			queryParams.put("user", "= " + bookQueue.getUser());
+			queryParams.put("renting", "= true");
+			List<BookQueue> list = list(BookQueue.class, null, null);
+
+			if (list.size() > 0) {
+				messageReturn.setMessage("É permitida a locação de somente um livro por vez.");
+				throw new Exception(messageReturn.getMessage());
+			}
+			
 			if (book.getAvailable()) {
 				book.setAvailable(false);
 				bookDAO.save(book);
@@ -102,6 +114,7 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 				queue.setDateIn(new Date());
 				queue.setRenting(true);
 				saveGeneric(queue);
+				messageReturn.setBookQueue(bookQueue);
 			} else {
 				messageReturn.setMessage("O livro não está disponível.");
 			}
@@ -125,11 +138,11 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 		try {
 			searchObject.getQueryParams().put("renting", " = false");
 			List<BookQueue> list = list(BookQueue.class, searchObject.getQueryParams(), null);
-			if(list.size()==0){
+			if (list.size() == 0) {
 				messageReturn.setMessage("Você é o próximo da fila, deseja aguardar.");
-			}else{
+			} else {
 				messageReturn.setMessage("A fila de espera deste livro é de: " + list.size() + " usuário(s), deseja aguardar.");
-			}			
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

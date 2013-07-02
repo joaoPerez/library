@@ -139,9 +139,38 @@ public class BookMBean implements Serializable {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
-		return "";
+		return "/common/index.xhtml?faces-redirect=true";
 	}
 
+	public void rent(){
+		MessageReturn ret = new MessageReturn();
+		try {
+			User user = userMBean.getLoggedUser();
+			WebResource webResource = client.resource(host + "libraryWS/bookQueue");
+			BookQueue bookQueue = new BookQueue();
+			bookQueue.setBook(book);
+			bookQueue.setUser(user);
+
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, bookQueue);
+
+			if (response.getStatus() != 201 && response.getStatus() != 200) {
+				ret.setMessage("Failed : HTTP error code : " + response.getStatus());
+				throw new Exception(ret.getMessage());
+			}
+
+			ret = response.getEntity(MessageReturn.class);
+			
+			if (ret.getBookQueue() == null) {
+				throw new Exception(ret.getMessage());
+			} else {
+				FacesUtil.showSuccessMessage(ret.getMessage());
+			}
+			loadList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesUtil.showAErrorMessage(ret.getMessage());
+		}
+	}
 	public void newBook() {
 		this.book = new Book();
 		this.author = new Author();
@@ -151,7 +180,10 @@ public class BookMBean implements Serializable {
 	public void edit() {
 		this.author = book.getAuthor();
 		this.category = book.getCategory();
-		System.out.println("");
+	}
+	
+	public String cancel(){
+		return "/common/index.xhtml?faces-redirect=true";
 	}
 
 	public String save() {
@@ -177,7 +209,7 @@ public class BookMBean implements Serializable {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
-		return "";
+		return "/common/index.xhtml?faces-redirect=true";
 	}
 
 	public void delete() {

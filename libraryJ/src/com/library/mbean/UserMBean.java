@@ -125,6 +125,10 @@ public class UserMBean implements Serializable {
 		this.user = new User();
 		return "index.xhtml\faces-redirect=true";
 	}
+	
+	public String cancelLogged(){
+		return "/common/listUser.xhtml?faces-redirect=true";
+	}
 
 	public void edit() {
 		isAdmin = true;
@@ -161,7 +165,7 @@ public class UserMBean implements Serializable {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
-		return "";
+		return "/common/listUser.xhtml?faces-redirect=true";
 	}
 
 	public void delete() {
