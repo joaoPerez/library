@@ -73,7 +73,7 @@
 			            </f:facet>
 			            <p:commandLink action="#{bookMBean.release}" update=":index" id="releaseLink">
 			            	<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
-				            <p:graphicImage value="/resources/images/release.jpg" style="border: 0px" title="Clique para fazer a devolução." rendered="#{!cat.available}"/>
+				            <p:graphicImage value="/resources/images/devolucao.png" style="border: 0px" title="Clique para fazer a devolução." rendered="#{!cat.available}"/>
 			            </p:commandLink>
 			        </p:column>
 			        

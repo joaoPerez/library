@@ -96,18 +96,18 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 			Map<String, String> queryParams = new HashMap<>();
 			queryParams.put("user", "= " + user.getId());
 			queryParams.put("renting", "= true");
-			
+
 			List<BookQueue> list = list(BookQueue.class, queryParams, null);
 
 			if (list.size() > 0) {
 				messageReturn.setMessage("É permitida a locação de somente um livro por vez.");
 				throw new Exception(messageReturn.getMessage());
 			}
-			
+
 			if (book.getAvailable()) {
 				book.setAvailable(false);
 				bookDAO.save(book);
-				
+
 				user.getBookList().add(book);
 				userDAO.save(user);
 
@@ -159,24 +159,49 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 		Book book = null;
 		try {
 			book = bookDAO.findById(Book.class, bookQueue.getBook().getId());
-			
+
 			Map<String, String> queryParams = new HashMap<>();
 			queryParams.put("book", "= " + book.getId());
-			queryParams.put("renting", "= true");			
+			queryParams.put("renting", "= true");
 			bookQueue = findByParameter(BookQueue.class, queryParams);
-			
+
 			remove(bookQueue);
+
+			queryParams.clear();
+			queryParams.put("book", "= " + book.getId());
+			queryParams.put("renting", "= false");
+
+			List<BookQueue> queueList = list(BookQueue.class, queryParams, "id");
+
+			if (queueList.isEmpty()) {
+				book.setAvailable(true);
+				bookDAO.save(book);
+				messageReturn.setBook(book);
+				messageReturn.setMessage(book.getTitle() + ", devolução efetuada com sucesso.");
+			} else {
+				for (BookQueue bQueue : queueList) {
+					//testa para ver se usuário ja esta locando
+					queryParams.clear();
+					queryParams.put("user", "= " + bQueue.getUser().getId());
+					queryParams.put("renting", "= true");
 					
-			book.setAvailable(true);
-			bookDAO.save(book);
-			messageReturn.setBook(book);
+					List<BookQueue> list = list(BookQueue.class, queryParams, null);
+					if(list.isEmpty()){
+						bQueue.setRenting(true);
+						saveGeneric(bQueue);
+						
+						bQueue.getUser().getBookList().add(book);
+						userDAO.save(bQueue.getUser());
+						messageReturn.setBook(book);
+						messageReturn.setMessage("Este livro está liberado para o próximo da fila que é o(a) "+bQueue.getUser().getName());
+						break;
+					}
+				}				
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			messageReturn.setMessage(e.getMessage());
-		}
-
-		if (messageReturn.getMessage() == null || messageReturn.getMessage().isEmpty()) {
-			messageReturn.setMessage(book.getTitle()+", devolução efetuada com sucesso.");
 		}
 
 		return messageReturn;
