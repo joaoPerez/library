@@ -5,17 +5,13 @@
         xmlns:p="http://primefaces.org/ui">
         	
       	<h:form id="newBook" prependId="false" >
-		    <div id="messages" class="messages">
-	       		<p:messages showDetail="false"  id="msg"/>
-	       	</div>
-	       	
 	       	<div id="boxNewBook" class="boxNewBook">
 	       		<h:panelGrid columns="2" columnClasses="colunaLabel60,coluna290" styleClass="formCadastroBook" border="0">
 					<h:outputText value="Titulo:" />
 					<p:inputText id="name" label="Titulo" required="true"  value="#{bookMBean.book.title}" style="width:97%" />
 
 					<h:outputText value="Descrição:" />
-					<p:inputTextarea rows="10" cols="60" counter="counter" maxlength="300" label="Descrição" required="true"
+					<p:inputTextarea rows="10" cols="53" counter="counter" maxlength="300" label="Descrição" required="true"
 					    counterTemplate="{0} caracteres restantes." autoResize="false" value="#{bookMBean.book.description}"/>
 					<h:outputText  />
 					<h:outputText id="counter" />
@@ -25,7 +21,7 @@
 					<p:inputText id="publicado" label="Publicado" required="true" maxlength="4" value="#{bookMBean.book.yearOfPublished}" size="2" />
 				</h:panelGrid>
 				
-				<h:panelGrid columns="4" columnClasses="colunaLabel70Right,colunaLabel180,colunaLabel70Right,colunaLabel100"  border="0">
+				<h:panelGrid columns="4" columnClasses="colunaLabel70Right,colunaLabel180,colunaLabel80Right,colunaLabel100"  border="0">
 					<h:outputText value="Autor:" />
 					<p:selectOneMenu value="#{bookMBean.author.id}" label="Autor" required="true" style="width:100%">
 			            <f:selectItems value="#{bookMBean.authores}"  var="a" itemLabel="#{a.name}" itemValue="#{a}"/>  

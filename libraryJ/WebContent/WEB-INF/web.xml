@@ -24,6 +24,12 @@
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
 		<param-value>server</param-value>
 	</context-param>
+	
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>afterdark</param-value>
+	</context-param>
+		
 
 	<context-param>
 		<param-name>org.apache.myfaces.NUMBER_OF_VIEWS_IN_SESSION</param-name>

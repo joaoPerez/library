@@ -34,9 +34,11 @@
 			<h:panelGrid rendered="#{userMBean.loggedUser != null}" styleClass="main">
 				<ui:insert name="contentAPP"/>
 			</h:panelGrid>
-						
+			
 			<div id="footer">
-				<p>Trabalho final de Programação C, professor Ries. Desenvolvido por Anderson Santos, Vitor Leonardi e João Paulo</p>
+				<p:panel rendered="#{userMBean.loggedUser != null}">
+					Trabalho final de Programação C, professor Ries. Desenvolvido por Anderson Santos, Vitor Leonardi e João Paulo
+				</p:panel>
 			</div>
 		</div>
 	</h:body>

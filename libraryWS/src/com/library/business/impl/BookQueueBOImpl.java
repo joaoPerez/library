@@ -152,4 +152,34 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 		return messageReturn;
 	}
 
+	@Override
+	@Transactional
+	public MessageReturn releaseBook(BookQueue bookQueue) {
+		MessageReturn messageReturn = new MessageReturn();
+		Book book = null;
+		try {
+			book = bookDAO.findById(Book.class, bookQueue.getBook().getId());
+			
+			Map<String, String> queryParams = new HashMap<>();
+			queryParams.put("book", "= " + book.getId());
+			queryParams.put("renting", "= true");			
+			bookQueue = findByParameter(BookQueue.class, queryParams);
+			
+			remove(bookQueue);
+					
+			book.setAvailable(true);
+			bookDAO.save(book);
+			messageReturn.setBook(book);
+		} catch (Exception e) {
+			e.printStackTrace();
+			messageReturn.setMessage(e.getMessage());
+		}
+
+		if (messageReturn.getMessage() == null || messageReturn.getMessage().isEmpty()) {
+			messageReturn.setMessage(book.getTitle()+", devolução efetuada com sucesso.");
+		}
+
+		return messageReturn;
+	}
+
 }

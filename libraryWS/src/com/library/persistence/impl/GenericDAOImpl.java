@@ -35,7 +35,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 	}
 
 	@SuppressWarnings({ "unchecked", "hiding" })
-	public <T> T findByParameter(Class<T> type, Map<String, Object> queryParans) throws Exception {
+	public <T> T findByParameter(final Class<T> type, Map<String, String> queryParams) throws Exception {
 		T obj = null;
 		try {
 			StringBuilder sql = new StringBuilder();
@@ -45,14 +45,13 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 			sql.append(" x ");
 
 			int x = 0;
-			Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
+			Iterator<Entry<String, String>> iterator = queryParams.entrySet().iterator();
 			while (iterator.hasNext()) {
-				Map.Entry<String, Object> element = iterator.next();
+				Map.Entry<String, String> element = iterator.next();
 				String whereAnd = x == 0 ? " where " : " and ";
 				sql.append(whereAnd).append(element.getKey()).append(element.getValue());
 				x++;
 			}
-			System.out.println("findByParameter: " + sql.toString());
 			Query query = em.createQuery(sql.toString());
 			query.setHint("toplink.refresh", "true");
 			obj = (T) query.getSingleResult();
@@ -166,7 +165,7 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 		}
 	}
 
-	public Integer count(final Class<T> type, Map<String, Object> queryParans) throws Exception {
+	public Integer count(final Class<T> type, Map<String, String> queryParans) throws Exception {
 		Long ret = null;
 		try {
 
@@ -176,9 +175,9 @@ public class GenericDAOImpl<T> implements GenericDAO<T> {
 			sql.append(" x ");
 
 			int x = 0;
-			Iterator<Entry<String, Object>> iterator = queryParans.entrySet().iterator();
+			Iterator<Entry<String, String>> iterator = queryParans.entrySet().iterator();
 			while (iterator.hasNext()) {
-				Map.Entry<String, Object> element = iterator.next();
+				Map.Entry<String, String> element = iterator.next();
 				String whereAnd = x == 0 ? " where " : " and ";
 				sql.append(whereAnd).append(element.getKey()).append(element.getValue());
 				x++;

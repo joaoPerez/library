@@ -19,8 +19,8 @@ public class GenericBOImpl<T> implements GenericBO<T>{
 	}
 
 	@SuppressWarnings("hiding")
-	public <T> T findByParameter(Class<T> type, Map<String, Object> queryParans) throws Exception {
-		return genericDAO.findByParameter(type, queryParans);
+	public <T> T findByParameter(final Class<T> type, Map<String, String> queryParams) throws Exception {
+		return genericDAO.findByParameter(type, queryParams);
 	}
 
 	public List<T> listPaginated(final Class<T> type, int startRow, int pageSize, Map<String, Object> queryParans, Boolean orderBy, String orderByField) throws Exception {
@@ -31,7 +31,7 @@ public class GenericBOImpl<T> implements GenericBO<T>{
 		return genericDAO.list(type, queryParams, orderByField);
 	}
 
-	public Integer count(Class<T> type, Map<String, Object> queryParans) throws Exception {
+	public Integer count(Class<T> type, Map<String, String> queryParans) throws Exception {
 		return genericDAO.count(type, queryParans);
 	}
 

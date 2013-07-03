@@ -64,6 +64,16 @@
 			            <p:commandLink action="#{bookMBean.getQueueSize}" update=":queue" oncomplete="queueModal.show();" id="queueLink" rendered="#{!cat.available}">
 			            	<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
 				            <p:graphicImage value="/resources/images/red.png"   style="border: 0px"  title="Não disponível, clique caso queira entrar na fila de espera."/>
+			            </p:commandLink> 
+			        </p:column>
+			        
+			        <p:column sortBy="#{cat.available}" style="text-align:center;width:10%" rendered="#{userMBean.loggedUser.admin}">
+			            <f:facet name="header">
+			                <h:outputText value="Devolução" />
+			            </f:facet>
+			            <p:commandLink action="#{bookMBean.release}" update=":index" id="releaseLink">
+			            	<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
+				            <p:graphicImage value="/resources/images/release.jpg" style="border: 0px" title="Clique para fazer a devolução." rendered="#{!cat.available}"/>
 			            </p:commandLink>
 			        </p:column>
 			        
