@@ -94,12 +94,18 @@ public class UserBOImpl extends GenericBOImpl<User> implements UserBO, Serializa
 	
 	@Override
 	public MessageReturn login(User user) {
-		MessageReturn messageReturn = userDAO.getByEmail(user.getEmail());
-		if (!messageReturn.getUser().getPassword().equals(user.getPassword())) {
-			messageReturn.setUser(null);
-			messageReturn.setMessage("Senha informada esta incorreta!");
-		}else{
-			messageReturn.setMessage("Login realizado com sucesso!");
+		MessageReturn messageReturn = null;
+		try {
+			messageReturn = userDAO.getByEmail(user.getEmail());
+			if (!messageReturn.getUser().getPassword().equals(user.getPassword())) {
+				messageReturn.setUser(null);
+				messageReturn.setMessage("Senha informada esta incorreta!");
+			}else{
+				messageReturn.setMessage("Login realizado com sucesso!");
+			}
+		} catch (Exception e) {
+			messageReturn = new MessageReturn();
+			messageReturn.setMessage(e.getMessage());
 		}
 		return messageReturn;
 	}

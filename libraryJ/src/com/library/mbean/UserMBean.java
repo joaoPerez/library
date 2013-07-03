@@ -71,7 +71,7 @@ public class UserMBean implements Serializable {
 
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, user);
 
-			if (response.getStatus() != 201 && response.getStatus() != 200) {
+			if (response.getStatus() != 201 && response.getStatus() != 200 && response.getStatus() != 500) {
 				throw new Exception("Failed : HTTP error code : " + response.getStatus());
 			}
 

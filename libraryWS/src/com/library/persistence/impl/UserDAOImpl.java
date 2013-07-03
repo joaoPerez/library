@@ -14,7 +14,7 @@ import com.library.persistence.UserDAO;
 public class UserDAOImpl extends GenericDAOImpl<User> implements UserDAO{
 	
 	@Override
-	public MessageReturn getByEmail(final String email) {
+	public MessageReturn getByEmail(final String email) throws Exception{
 		MessageReturn messageReturn = new MessageReturn();
 		User user = null;
 		try {
@@ -23,12 +23,11 @@ public class UserDAOImpl extends GenericDAOImpl<User> implements UserDAO{
 			user = (User) queryView.getSingleResult();
 			messageReturn.setUser(user);			
 		} catch (NoResultException nre) {
-			messageReturn.setMessage("Usuário não encontrado!");
+			throw new Exception("Usuário não encontrado!");
 		} catch (NonUniqueResultException nure) {
-			messageReturn.setMessage("Multiplos usuários encontrados com o mesmo email!");
+			throw new Exception("Multiplos usuários encontrados com o mesmo email!");
 		}catch(Exception e){
-			e.printStackTrace();
-			messageReturn.setMessage(e.getMessage());
+			throw new Exception(e.getMessage());
 		}
 		return messageReturn;
 	}

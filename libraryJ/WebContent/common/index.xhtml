@@ -73,14 +73,14 @@
 			            </f:facet>
 			            <p:commandLink action="#{bookMBean.release}" update=":index" id="releaseLink">
 			            	<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
-				            <p:graphicImage value="/resources/images/devolucao.png" style="border: 0px" title="Clique para fazer a devolução." rendered="#{!cat.available}"/>
+				            <p:graphicImage value="/resources/images/back_small.png" style="border: 0px" title="Clique para fazer a devolução." rendered="#{!cat.available}"/>
 			            </p:commandLink>
 			        </p:column>
 			        
 			        <p:column rendered="#{userMBean.loggedUser.admin}" style="width:5%">
 			        	<p:commandLink action="#{bookMBean.edit}" update=":newBook" oncomplete="newBookModal.show();" id="editButton">
 			        		<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
-							<p:graphicImage value="/resources/images/bt_edit.gif" style="border: 0px" />
+							<p:graphicImage value="/resources/images/edit.png" style="border: 0px" />
 						</p:commandLink>
 			        </p:column>
 			    </p:dataTable>
