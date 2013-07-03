@@ -80,7 +80,7 @@
 			        <p:column rendered="#{userMBean.loggedUser.admin}" style="width:5%">
 			        	<p:commandLink action="#{bookMBean.edit}" update=":newBook" oncomplete="newBookModal.show();" id="editButton">
 			        		<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
-							<p:graphicImage value="/resources/images/edit.png" style="border: 0px" />
+							<p:graphicImage value="/resources/images/new_edit.png" style="border: 0px" />
 						</p:commandLink>
 			        </p:column>
 			    </p:dataTable>
@@ -103,7 +103,7 @@
 						<p><h:outputText value="#{bookMBean.queueTip}" styleClass="fontMessage"/></p>
 					</div>
 					<div align="center">
-				        <p:commandButton value="Sim" oncomplete="queueModal.hide()" action="#{bookMBean.insertOnQueue}" styleClass="button"/>  
+				        <p:commandButton value="Sim" oncomplete="queueModal.hide()" update=":index" action="#{bookMBean.insertOnQueue}" styleClass="button"/>  
 				        <p:commandButton value="Não" oncomplete="queueModal.hide()" styleClass="button" action="#{bookMBean.cancel}"/>   
 	                </div>
 	            </p:panel> 

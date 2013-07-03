@@ -8,7 +8,7 @@
         
         <ui:define name="contentAPP">
 	        <h:form prependId="false">
-	        	<h:outputText value="Lista de Livros" styleClass="boxTitulo"/>
+	        	<h:outputText value="Lista de Autores" styleClass="boxTitulo"/>
 	        	
 	        	<div align="center" style="width: 100%;" >
 	        		<div id="messages" class="messages" style="width: 50%;">
@@ -43,7 +43,7 @@
 				        <p:column style="width:5%">
 				        	<p:commandLink action="#{authorMBean.edit}" update=":newAuthor" oncomplete="newAuthorModal.show();" id="editButton">
 				        		<f:setPropertyActionListener value="#{cat}" target="#{authorMBean.author}" />  
-								<p:graphicImage value="/resources/images/edit.png" style="border: 0px" />
+								<p:graphicImage value="/resources/images/new_edit.png" style="border: 0px" />
 							</p:commandLink>
 				        </p:column>
 				    </p:dataTable>

@@ -40,20 +40,40 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 	public MessageReturn addOnQueue(BookQueue bookQueue) throws Exception {
 		MessageReturn libReturn = new MessageReturn();
 		try {
+			Boolean addOnQueue = true;
 			BookQueue queue = new BookQueue();
 			Book book = bookDAO.findById(Book.class, bookQueue.getBook().getId());
 			User user = userDAO.findById(User.class, bookQueue.getUser().getId());
-			queue.setBook(book);
-			queue.setUser(user);
-			queue.setDateIn(new Date());
-			queue.setRenting(false);
-			saveGeneric(queue);
+			
+			Map<String,String> queryParams = new HashMap<>();
+			queryParams.put("book", " = "+book.getId());
+			List<BookQueue> list = list(BookQueue.class, queryParams, null);
+			int x = 0;
+			for (BookQueue bk : list) {
+				if(bk.getUser().getId().equals(user.getId()) && list.size() == 1){
+					libReturn.setMessage("Você já esta locando este livro.");
+					addOnQueue = false;
+					break;
+				}else if(bk.getUser().getId().equals(user.getId())){
+					libReturn.setMessage("Você é o "+x+"º da fila de espera deste livro.");
+					addOnQueue = false;
+					break;
+				}
+				x++;
+			}
+			
+			if(addOnQueue){
+				queue.setBook(book);
+				queue.setUser(user);
+				queue.setDateIn(new Date());
+				queue.setRenting(false);
+				saveGeneric(queue);
+				libReturn.setBookQueue(queue);
+				libReturn.setMessage("Adicionado na fila com sucesso!");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			libReturn.setMessage(e.getMessage());
-		}
-		if (libReturn.getMessage() == null) {
-			libReturn.setMessage("Adicionado na fila com sucesso!");
 		}
 		return libReturn;
 	}
@@ -164,7 +184,7 @@ public class BookQueueBOImpl extends GenericBOImpl<BookQueue> implements BookQue
 			queryParams.put("book", "= " + book.getId());
 			queryParams.put("renting", "= true");
 			bookQueue = findByParameter(BookQueue.class, queryParams);
-
+			
 			remove(bookQueue);
 
 			queryParams.clear();

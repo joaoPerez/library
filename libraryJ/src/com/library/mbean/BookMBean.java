@@ -117,7 +117,7 @@ public class BookMBean implements Serializable {
 		}
 	}
 	
-	public String insertOnQueue(){
+	public void insertOnQueue(){
 		MessageReturn ret = new MessageReturn();
 		try {
 			User user = userMBean.getLoggedUser();
@@ -134,12 +134,16 @@ public class BookMBean implements Serializable {
 			}
 
 			ret = response.getEntity(MessageReturn.class);
-			FacesUtil.showSuccessMessage(ret.getMessage());
+			
+			if (ret.getBookQueue() == null) {
+				throw new Exception(ret.getMessage());
+			} else {
+				FacesUtil.showSuccessMessage(ret.getMessage());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
-		return "/common/index.xhtml?faces-redirect=true";
 	}
 
 	public void rent(){
