@@ -2,7 +2,7 @@
 //  UserListViewController.h
 //  Library-iOS
 //
-//  Created by Vitor Leonardi on 6/13/13.
+//  Created by Vitor Leonardi on 7/4/13.
 //  Copyright (c) 2013 Vitor Leonardi. All rights reserved.
 //
 

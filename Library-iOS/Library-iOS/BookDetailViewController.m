@@ -1,20 +1,21 @@
 //
-//  BookEditViewController.m
+//  BookDetailViewController.m
 //  Library-iOS
 //
-//  Created by Vitor Leonardi on 6/13/13.
+//  Created by Vitor Leonardi on 7/1/13.
 //  Copyright (c) 2013 Vitor Leonardi. All rights reserved.
 //
 
-#import "BookEditViewController.h"
+#import "BookDetailViewController.h"
 
-@interface BookEditViewController ()
+@interface BookDetailViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *lblBookTitle;
 @property (weak, nonatomic) IBOutlet UILabel *lblAuthorName;
 @property (weak, nonatomic) IBOutlet UIImageView *imgBookCover;
+
 @end
 
-@implementation BookEditViewController
+@implementation BookDetailViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,10 +30,9 @@
 {
     [super viewDidLoad];
     
-    [self.lblBookTitle setText:self.book[@"Livro"]];
-    [self.lblAuthorName setText:self.book[@"Autor"]];
-//    NSString *pathToCover = [NSString stringWithFormat:@"%@", [[NSBundle mainBundle] pathForResource:self.book[@"Capa"] ofType:@"jpeg"]];
-    [self.imgBookCover setImage:[UIImage imageNamed:self.book[@"Capa"]]];
+    [self.lblBookTitle setText:self.book.title];
+    [self.lblAuthorName setText:self.book.author];
+//    [self.imgBookCover setImage:[UIImage imageNamed:self.book[@"Capa"]]];
 }
 
 - (void)didReceiveMemoryWarning

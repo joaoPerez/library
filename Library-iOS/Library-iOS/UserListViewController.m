@@ -1,28 +1,28 @@
 //
-//  AuthorListViewController.m
+//  UserListViewController.m
 //  Library-iOS
 //
-//  Created by Vitor Leonardi on 6/13/13.
+//  Created by Vitor Leonardi on 7/4/13.
 //  Copyright (c) 2013 Vitor Leonardi. All rights reserved.
 //
 
-#import "AuthorListViewController.h"
+#import "UserListViewController.h"
 #import <RestKit/RestKit.h>
-#import "Author.h"
+#import "User.h"
 
-@interface AuthorListViewController ()
+@interface UserListViewController ()
 {
-    NSArray *arrayAuthors;
+    NSArray *arrayUsers;
 }
 @end
 
-@implementation AuthorListViewController
+@implementation UserListViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        
+        // Custom initialization
     }
     return self;
 }
@@ -30,9 +30,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Autores";
-    
-    [self getAuthorList];
+
+    [self getUserList];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,7 +49,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [arrayAuthors count];
+    return [arrayUsers count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -58,19 +57,20 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    Author *author = arrayAuthors[indexPath.row];
-    [cell.textLabel setText:author.name];
+    User *user = arrayUsers[indexPath.row];
+    [cell.textLabel setText:user.name];
+    [cell.detailTextLabel setText:user.email];
     
     return cell;
 }
 
-- (void)getAuthorList
+- (void)getUserList
 {
     RKObjectMapping *bookMapping = [RKObjectMapping requestMapping];
-    [bookMapping addAttributeMappingsFromArray:@[@"name", @"id"]];
+    [bookMapping addAttributeMappingsFromArray:@[@"name", @"email"]];
     
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
-    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:nil keyPath:@"author" statusCodes:statusCodes];
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:nil keyPath:@"user" statusCodes:statusCodes];
     
     // Error mapping
     RKObjectMapping *errorMapping = [RKObjectMapping mappingForClass:[RKErrorMessage class]];
@@ -82,20 +82,21 @@
     
     RKObjectManager *manager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:@"http://192.241.132.106:8080/libraryWS/"]];
     
+    //    [manager addRequestDescriptor:requestDescriptor];
     [manager addResponseDescriptorsFromArray:@[responseDescriptor, errorDescriptor]];
     
     // POST to create
-    [manager getObjectsAtPath:@"author" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-        NSMutableArray *authorList = [[NSMutableArray alloc] init];
-        for (NSDictionary *authorDict in [mappingResult array]) {
-            Author *author = [[Author alloc] init];
-            [author setName:authorDict[@"name"]];
-            [author setAuthorId:authorDict[@"id"]];
-            [authorList addObject:author];
-            author = nil;
+    [manager getObjectsAtPath:@"user" parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+        NSMutableArray *userList = [[NSMutableArray alloc] init];
+        for (NSDictionary *userDict in [mappingResult array]) {
+            User *user = [[User alloc] init];
+            [user setName:userDict[@"name"]];
+            [user setEmail:userDict[@"email"]];
+            [userList addObject:user];
+            user = nil;
         }
         
-        arrayAuthors = authorList;
+        arrayUsers = userList;
         [self.tableView reloadData];
         
     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
