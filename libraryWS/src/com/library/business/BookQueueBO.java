@@ -44,4 +44,10 @@ public interface BookQueueBO extends GenericBO<BookQueue> {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public MessageReturn waitList(SearchObject searchObject);
+	
+	@PUT
+	@Path("/release")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public MessageReturn releaseBook(BookQueue bookQueue);
 }

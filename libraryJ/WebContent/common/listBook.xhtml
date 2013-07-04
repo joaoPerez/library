@@ -50,7 +50,7 @@
 				        <p:column >
 				        	<p:commandLink action="#{bookMBean.edit}" update=":newBook" oncomplete="newBookModal.show();" id="editButton">
 				        		<f:setPropertyActionListener value="#{cat}" target="#{bookMBean.book}" />  
-								<p:graphicImage value="/resources/images/bt_edit.gif" style="border: 0px" />
+								<p:graphicImage value="/resources/images/new_edit.png" style="border: 0px" />
 							</p:commandLink>
 				        </p:column>
 				    </p:dataTable>
@@ -62,7 +62,7 @@
 	                 </div> 
 	    		</p:confirmDialog>  		
 			</h:form>  
-			<p:dialog header="Cadastro de Livro" resizable="false" widgetVar="newBookModal" modal="true" appendToBody="true" height="300" width="420">  
+			<p:dialog header="Cadastro de Livro" resizable="false" widgetVar="newBookModal" modal="true" appendToBody="true" height="300">  
 			    <ui:include src="/include/formBook.xhtml" />
 			</p:dialog>
         </ui:define>

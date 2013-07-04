@@ -9,6 +9,7 @@
 <f:view locale="pt_BR" id="view">
 	<h:head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="shortcut icon" href="#{facesContext.externalContext.request.contextPath}/resources/images/book.ico" type="image/x-icon" />
 		<link rel="stylesheet" href="#{facesContext.externalContext.request.contextPath}/resources/css/default.css" type="text/css" />
 		<script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/resources/js/formaters.js"></script>
 		<script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/resources/js/functions.js"></script>
@@ -34,9 +35,11 @@
 			<h:panelGrid rendered="#{userMBean.loggedUser != null}" styleClass="main">
 				<ui:insert name="contentAPP"/>
 			</h:panelGrid>
-						
+			
 			<div id="footer">
-				<p>Trabalho final de Programação C, professor Ries. Desenvolvido por Anderson Santos, Vitor Leonardi e João Paulo</p>
+				<p:panel rendered="#{userMBean.loggedUser != null}">
+					Trabalho final de Programação C, professor Ries. Desenvolvido por Anderson Santos, Vitor Leonardi e João Paulo
+				</p:panel>
 			</div>
 		</div>
 	</h:body>

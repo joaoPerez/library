@@ -56,7 +56,7 @@
 						styleClass="button" 
 						oncomplete="newUserModal.hide();">  
 					</p:commandButton>
-					<p:commandButton value="Voltar" immediate="true" id="voltar" ajax="false"  styleClass="button">
+					<p:commandButton value="Voltar" immediate="true" id="voltar" ajax="false"  styleClass="button" action="#{userMBean.cancelLogged}">
 					</p:commandButton>
 				</div>
 	       	</div>

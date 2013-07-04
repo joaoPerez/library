@@ -61,6 +61,10 @@ public class AuthorMBean implements Serializable {
 		
 		return "/common/listAuthor.xhtml?faces-redirect=true";
 	}
+	
+	public String cancel(){
+		return "/common/listAuthor.xhtml?faces-redirect=true";
+	}
 
 	public void newAuthor() {
 		this.author = new Author();
@@ -89,7 +93,7 @@ public class AuthorMBean implements Serializable {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
-		return "";
+		return "/common/listAuthor.xhtml?faces-redirect=true";
 	}
 
 	public void delete() {

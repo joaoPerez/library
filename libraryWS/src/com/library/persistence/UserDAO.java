@@ -5,6 +5,6 @@ import com.library.entity.xml.MessageReturn;
 
 public interface UserDAO  extends GenericDAO<User>{
 	
-	public MessageReturn getByEmail(final String email);
+	public MessageReturn getByEmail(final String email) throws Exception;
 
 }

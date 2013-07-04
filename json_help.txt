@@ -105,3 +105,9 @@ http://localhost:8080/libraryWS/bookQueue
 se o livro estiver alugado sera retornado um MessageReturn com a menagem que o livro não esta disponível 
 Se o usuário quiser ir para a fila de espera é só fazer um POST na mesma url com o mesmo JSON
 
+Para saber o tamanho da fila de espera deste livro - PUT - URL http://localhost:8080/libraryWS/bookQueue/listSize
+{
+"queryParams": { 
+        "entry":{"key":"book","value":" = 2"}
+     }
+}

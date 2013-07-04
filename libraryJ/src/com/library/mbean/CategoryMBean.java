@@ -61,6 +61,10 @@ public class CategoryMBean implements Serializable {
 		
 		return "/common/listCategory.xhtml?faces-redirect=true";
 	}
+	
+	public String cancel(){
+		return "/common/listCategory.xhtml?faces-redirect=true";
+	}
 
 	public void newCategory() {
 		this.category = new Category();
@@ -89,7 +93,7 @@ public class CategoryMBean implements Serializable {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
-		return "";
+		return "/common/listCategory.xhtml?faces-redirect=true";
 	}
 
 	public void delete() {

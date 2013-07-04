@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -14,8 +15,11 @@ import javax.ws.rs.core.MediaType;
 
 import com.library.entity.Author;
 import com.library.entity.Book;
+import com.library.entity.BookQueue;
 import com.library.entity.Category;
+import com.library.entity.User;
 import com.library.entity.xml.MessageReturn;
+import com.library.entity.xml.SearchObject;
 import com.library.util.FacesUtil;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -33,23 +37,28 @@ public class BookMBean implements Serializable {
 
 	HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 	
+	@ManagedProperty(value = "#{userMBean}")  
+	private UserMBean userMBean;
+
 	private List<Book> bookList;
-	
+
 	private List<Author> authorList;
-	
+
 	public SelectItem[] authores;
-	
+
 	public SelectItem[] categories;
-	
-	private List<Category> categoryList; 
-	
+
+	private List<Category> categoryList;
+
 	private Category category;
-	
+
 	private Author author;
 
 	private Book book;
 
 	private Book[] selectedBooks;
+
+	private String queueTip;
 
 	Client client = null;
 
@@ -62,7 +71,7 @@ public class BookMBean implements Serializable {
 		category = new Category();
 		this.book.setAuthor(author);
 		this.book.setCategory(category);
-		
+
 		Object request = FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		if (request instanceof HttpServletRequest) {
 			String[] str = ((HttpServletRequest) request).getRequestURL().toString().split("library");
@@ -70,20 +79,133 @@ public class BookMBean implements Serializable {
 		}
 		loadList();
 	}
-	
-	private void loadList(){
+
+	private void loadList() {
 		WebResource webResource = client.resource(host + "libraryWS/book");
-		
-		bookList = webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<List<Book>>(){});
+
+		bookList = webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<List<Book>>() {
+		});
 	}
 
 	public String list() {
-		
+
 		loadList();
-		
+
 		return "/common/index.xhtml?faces-redirect=true";
 	}
 
+	public void getQueueSize() {
+		MessageReturn ret = new MessageReturn();
+		try {
+
+			WebResource webResource = client.resource(host + "libraryWS/bookQueue/listSize");
+			SearchObject search = new SearchObject();
+			search.getQueryParams().put("book", " = " + book.getId());
+
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, search);
+
+			if (response.getStatus() != 201 && response.getStatus() != 200) {
+				ret.setMessage("Failed : HTTP error code : " + response.getStatus());
+				throw new Exception(ret.getMessage());
+			}
+
+			ret = response.getEntity(MessageReturn.class);
+			queueTip = ret.getMessage();
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesUtil.showAErrorMessage(ret.getMessage());
+		}
+	}
+	
+	public void insertOnQueue(){
+		MessageReturn ret = new MessageReturn();
+		try {
+			User user = userMBean.getLoggedUser();
+			WebResource webResource = client.resource(host + "libraryWS/bookQueue");
+			BookQueue bookQueue = new BookQueue();
+			bookQueue.setBook(book);
+			bookQueue.setUser(user);
+
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, bookQueue);
+
+			if (response.getStatus() != 201 && response.getStatus() != 200) {
+				ret.setMessage("Failed : HTTP error code : " + response.getStatus());
+				throw new Exception(ret.getMessage());
+			}
+
+			ret = response.getEntity(MessageReturn.class);
+			
+			if (ret.getBookQueue() == null) {
+				throw new Exception(ret.getMessage());
+			} else {
+				FacesUtil.showSuccessMessage(ret.getMessage());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesUtil.showAErrorMessage(ret.getMessage());
+		}
+	}
+
+	public void rent(){
+		MessageReturn ret = new MessageReturn();
+		try {
+			User user = userMBean.getLoggedUser();
+			WebResource webResource = client.resource(host + "libraryWS/bookQueue");
+			BookQueue bookQueue = new BookQueue();
+			bookQueue.setBook(book);
+			bookQueue.setUser(user);
+
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, bookQueue);
+
+			if (response.getStatus() != 201 && response.getStatus() != 200) {
+				ret.setMessage("Failed : HTTP error code : " + response.getStatus());
+				throw new Exception(ret.getMessage());
+			}
+
+			ret = response.getEntity(MessageReturn.class);
+			
+			if (ret.getBookQueue() == null) {
+				throw new Exception(ret.getMessage());
+			} else {
+				FacesUtil.showSuccessMessage(ret.getMessage());
+			}
+			loadList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesUtil.showAErrorMessage(ret.getMessage());
+		}
+	}
+	
+	public void release(){
+		MessageReturn ret = new MessageReturn();
+		try {
+			User user = userMBean.getLoggedUser();
+			WebResource webResource = client.resource(host + "libraryWS/bookQueue/release");
+			BookQueue bookQueue = new BookQueue();
+			bookQueue.setBook(book);
+			bookQueue.setUser(user);
+
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, bookQueue);
+
+			if (response.getStatus() != 201 && response.getStatus() != 200) {
+				ret.setMessage("Failed : HTTP error code : " + response.getStatus());
+				throw new Exception(ret.getMessage());
+			}
+
+			ret = response.getEntity(MessageReturn.class);
+			
+			if (ret.getBook() == null) {
+				throw new Exception(ret.getMessage());
+			} else {
+				FacesUtil.showSuccessMessage(ret.getMessage());
+			}
+			loadList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesUtil.showAErrorMessage(ret.getMessage());
+		}
+	}
+	
 	public void newBook() {
 		this.book = new Book();
 		this.author = new Author();
@@ -93,7 +215,10 @@ public class BookMBean implements Serializable {
 	public void edit() {
 		this.author = book.getAuthor();
 		this.category = book.getCategory();
-		System.out.println("");
+	}
+	
+	public String cancel(){
+		return "/common/index.xhtml?faces-redirect=true";
 	}
 
 	public String save() {
@@ -119,7 +244,7 @@ public class BookMBean implements Serializable {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
-		return "";
+		return "/common/index.xhtml?faces-redirect=true";
 	}
 
 	public void delete() {
@@ -149,11 +274,12 @@ public class BookMBean implements Serializable {
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
 	}
-	
+
 	public SelectItem[] getAuthores() {
 		WebResource webResource = client.resource(host + "libraryWS/author");
-		
-		authorList = webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<List<Author>>(){});
+
+		authorList = webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<List<Author>>() {
+		});
 
 		List<SelectItem> itens = new ArrayList<SelectItem>(authorList.size());
 
@@ -165,12 +291,13 @@ public class BookMBean implements Serializable {
 		}
 		return itens.toArray(new SelectItem[itens.size()]);
 	}
-	
+
 	public SelectItem[] getCategories() {
 
 		WebResource webResource = client.resource(host + "libraryWS/category");
-		
-		categoryList = webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<List<Category>>(){});
+
+		categoryList = webResource.accept(MediaType.APPLICATION_JSON).get(new GenericType<List<Category>>() {
+		});
 
 		List<SelectItem> itens = new ArrayList<SelectItem>(categoryList.size());
 
@@ -245,6 +372,22 @@ public class BookMBean implements Serializable {
 
 	public void setAuthor(Author author) {
 		this.author = author;
+	}
+
+	public String getQueueTip() {
+		return queueTip;
+	}
+
+	public void setQueueTip(String queueTip) {
+		this.queueTip = queueTip;
+	}
+
+	public UserMBean getUserMBean() {
+		return userMBean;
+	}
+
+	public void setUserMBean(UserMBean userMBean) {
+		this.userMBean = userMBean;
 	}
 
 }

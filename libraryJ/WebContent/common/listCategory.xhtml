@@ -31,7 +31,7 @@
 				    		rows="10" selection="#{categoryMBean.selectedCategorys}" rowKey="#{cat}" 
 				    		paginatorPosition="botton" >
 				    	
-				    	<p:column selectionMode="multiple" style="text-align:center"  />
+				    	<p:column selectionMode="multiple" style="text-align:center; width:5%"  />
 				        
 				        <p:column sortBy="#{cat.type}" >
 				            <f:facet name="header">
@@ -40,10 +40,10 @@
 				            <h:outputText value="#{cat.type}" />
 				        </p:column>
 				        
-				        <p:column >
+				        <p:column style="width:5%">
 				        	<p:commandLink action="#{categoryMBean.edit}" update=":newCategory" oncomplete="newCategoryModal.show();" id="editButton">
 				        		<f:setPropertyActionListener value="#{cat}" target="#{categoryMBean.category}" />  
-								<p:graphicImage value="/resources/images/bt_edit.gif" style="border: 0px" />
+								<p:graphicImage value="/resources/images/new_edit.png" style="border: 0px" />
 							</p:commandLink>
 				        </p:column>
 				    </p:dataTable>
@@ -51,7 +51,7 @@
 				<p:confirmDialog message="Confirma a Exclusão das categorias selecionados?" header="Confirmação" severity="alert" widgetVar="confirmation">  
                   	<div align="center">
 				        <p:commandButton value="Sim" update="categoryList,mensagem" oncomplete="confirmation.hide()" action="#{categoryMBean.delete}"/>  
-				        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" />   
+				        <p:commandButton value="Não" onclick="confirmation.hide()" type="button" action="#{categoryMBean.cancel}"/>   
 	                 </div> 
 	    		</p:confirmDialog>  		
 			</h:form>  

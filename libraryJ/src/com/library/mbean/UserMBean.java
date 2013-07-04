@@ -71,7 +71,7 @@ public class UserMBean implements Serializable {
 
 			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, user);
 
-			if (response.getStatus() != 201 && response.getStatus() != 200) {
+			if (response.getStatus() != 201 && response.getStatus() != 200 && response.getStatus() != 500) {
 				throw new Exception("Failed : HTTP error code : " + response.getStatus());
 			}
 
@@ -125,6 +125,10 @@ public class UserMBean implements Serializable {
 		this.user = new User();
 		return "index.xhtml\faces-redirect=true";
 	}
+	
+	public String cancelLogged(){
+		return "/common/listUser.xhtml?faces-redirect=true";
+	}
 
 	public void edit() {
 		isAdmin = true;
@@ -161,7 +165,7 @@ public class UserMBean implements Serializable {
 			e.printStackTrace();
 			FacesUtil.showAErrorMessage(ret.getMessage());
 		}
-		return "";
+		return "/common/listUser.xhtml?faces-redirect=true";
 	}
 
 	public void delete() {
@@ -232,14 +236,6 @@ public class UserMBean implements Serializable {
 		this.isAdmin = isAdmin;
 	}
 
-	public User getLoggedUser() {
-		return loggedUser;
-	}
-
-	public void setLoggedUser(User loggedUser) {
-		this.loggedUser = loggedUser;
-	}
-
 	public User[] getSelectedUsers() {
 		return selectedUsers;
 	}
@@ -271,4 +267,13 @@ public class UserMBean implements Serializable {
 	public void setLogoutURL(String logoutURL) {
 		this.logoutURL = logoutURL;
 	}
+
+	public User getLoggedUser() {
+		return loggedUser;
+	}
+
+	public void setLoggedUser(User loggedUser) {
+		this.loggedUser = loggedUser;
+	}
+
 }
