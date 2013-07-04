@@ -12,4 +12,5 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *author;
 @property (nonatomic, strong) NSString *category;
+@property (assign) BOOL available;
 @end

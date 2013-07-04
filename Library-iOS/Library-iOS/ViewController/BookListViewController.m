@@ -74,7 +74,7 @@
 - (void)getBookList
 {
     RKObjectMapping *bookMapping = [RKObjectMapping requestMapping];
-    [bookMapping addAttributeMappingsFromArray:@[@"title", @"author", @"category"]];
+    [bookMapping addAttributeMappingsFromArray:@[@"title", @"author", @"category", @"available"]];
     
     NSIndexSet *statusCodes = RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful);
     RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:bookMapping pathPattern:nil keyPath:@"book" statusCodes:statusCodes];
@@ -98,6 +98,7 @@
         for (NSDictionary *bookDict in [mappingResult array]) {
             Book *book = [[Book alloc] init];
             [book setTitle:bookDict[@"title"]];
+//            [book setAvailable:bookDict["available"]];
             [book setAuthor:bookDict[@"author"][@"name"]];
             [book setCategory:bookDict[@"category"][@"type"]];
             [bookList addObject:book];
